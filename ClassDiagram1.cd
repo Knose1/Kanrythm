@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Com.Github.Knose1.Common.File.AudioClipGetter">
+    <Position X="41" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAACACAAAAAAAAAgAAAAAAAAAAg=</HashCode>
+      <FileName>Assets\_Common\Scripts\File\AudioClipGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.File.FileGetter">
+    <Position X="41" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAgAAAAIAAAAAABAAEAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\File\FileGetter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.File.HandleTextFile">
+    <Position X="38.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\File\HandleTextFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.StateMachine">
+    <Position X="5.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAIAAAAAAgAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\StateMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.CallerBase" Collapsed="true">
+    <Position X="24.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller" Collapsed="true">
+    <Position X="26" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1&gt;" Collapsed="true">
+    <Position X="26" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2&gt;" Collapsed="true">
+    <Position X="24.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3&gt;" Collapsed="true">
+    <Position X="26" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4&gt;" Collapsed="true">
+    <Position X="23.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5&gt;" Collapsed="true">
+    <Position X="23.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6&gt;" Collapsed="true">
+    <Position X="23.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7&gt;" Collapsed="true">
+    <Position X="26" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8&gt;" Collapsed="true">
+    <Position X="26" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9&gt;" Collapsed="true">
+    <Position X="26" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10&gt;" Collapsed="true">
+    <Position X="23.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11&gt;" Collapsed="true">
+    <Position X="23.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12&gt;" Collapsed="true">
+    <Position X="23.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13&gt;" Collapsed="true">
+    <Position X="23.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14&gt;" Collapsed="true">
+    <Position X="26" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15&gt;" Collapsed="true">
+    <Position X="26" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.Caller&lt;T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16&gt;" Collapsed="true">
+    <Position X="23.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\Caller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.AsyncCaller.CallerList" Collapsed="true">
+    <Position X="26.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\AsyncCaller\CallerList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Common.Utils.Matrix2D&lt;T&gt;" Collapsed="true">
+    <Position X="30.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAoAABAIAEAQEiAAAAEAAQAABAAAAAGAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Common\Scripts\Utils\Matrix2D.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Data.Difficulty" Collapsed="true">
+    <Position X="36.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAABAQQAABgAAAAIAAAABAAAAAYAACAAAAgAAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Data\Difficulty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Data.Map" Collapsed="true">
+    <Position X="34.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BhAAAAABAAAAAAAAAAAAAAIBAAAEAAAAAAAAAgACAAQ=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Data\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Data.Timing.TimeLine" Collapsed="true">
+    <Position X="36.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAEAAAAAABAAACAAAAAFAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Data\Timing\TimeLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Game.BeatObject.Beat">
+    <Position X="0.5" Y="7" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAQBAAKAEgKEAYQAAoQAAAEAAABAAAAAACEEEAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Game\BeatObject\Beat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Game.BeatObject.BeatDestroyParticle">
+    <Position X="15.75" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Game\BeatObject\BeatDestroyParticle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Game.GameManager">
+    <Position X="6.75" Y="7" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEQAAICAAAAAAAgAAQQCAAAAAAAAzAAAAgAIAhEA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Game\GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Game.RythmMusicPlayer">
+    <Position X="13" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>CAQQAIAAAAgAAAAAAAEAAAEAAIAAEAAEoAAAABAkIFA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Game\RythmMusicPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Game.PlayerType.CanonState">
+    <Position X="18" Y="4" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAACEAgAAgAAAAAAAAAAAIAAAAAEAAAABgAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Game\PlayerType\CanonState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Game.PlayerType.Player">
+    <Position X="9.5" Y="7" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAIAAGAKAAAAAAAAAAAAAAAABAAABAgAAEAAQ=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Game\PlayerType\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Loader.MapLoader" Collapsed="true">
+    <Position X="34.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgABAAAAAAAAAAAAgAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Loader\MapLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.StretchableDeltaTime">
+    <Position X="4" Y="7" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAABCAgAASAAAIAAgAAgAIAAIARAAAAAQAAAAAAAgAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\StretchableDeltaTime.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="0.117" />
+  </Class>
+  <Struct Name="Com.Github.Knose1.Kanrythm.Data.MapTimingData" Collapsed="true">
+    <Position X="34.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQBAAAAAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Data\MapTimingData.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Com.Github.Knose1.Kanrythm.Data.Timing.KeyTime" Collapsed="true">
+    <Position X="36.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Data\Timing\KeyTime.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

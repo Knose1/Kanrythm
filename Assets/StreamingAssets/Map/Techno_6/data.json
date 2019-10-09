@@ -1,0 +1,11 @@
+﻿{
+	"name"			: "The field of dreams",
+	"audio"			: "level.ogg",
+	"author"		: "Someone",
+	"difficulties"	: ["Easy"],
+	"timing" : {
+		"bpm":144,
+		"offset":0,
+		"timeSignature":4
+	}
+}

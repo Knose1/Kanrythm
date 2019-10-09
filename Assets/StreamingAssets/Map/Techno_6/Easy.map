@@ -1,0 +1,21 @@
+﻿;timeSplitting : the number (uint) of split by beat
+;
+; example : timeSplitting=4
+; it means that 1 beat will be split into 4 timingSection
+; 
+; Beats           :  Beat                                Beat                                Beat
+; timeSplitting   :  1/4      2/4      3/4      4/4      1/4      2/4      3/4      4/4      1/4
+; timeline        :   |--------|--------|--------|--------|--------|--------|--------|--------|
+; mapping indexes :   0        1        2        3        4        5        6        7        8
+
+timeSplitting = 1
+
+; approachRate is the traveling time of a beat object, expressed in seconds.
+approachRate = 1,2
+
+index          =  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10 |  11 |  12 |  13 |  14 |  15 |  16 |  17 |  18 |  19 |  20 |  21 |  22 |  23 |
+mainrotation   =  0  |  45 |  90 |  0  | -45 |  0  | 180 |  45 |  90 |  45 | 135 | -45 | 135 |  90 |  0  | 180 |  0  | -45 | -90 | -45 |-135 | 180 | 135 |  90 |
+rotationcanon2 =     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+
+; When you set a rotation, the beat object is shoot at the specified rotation.
+; Put an empty space in a rotation property if you don't want to create a beat shoot.
