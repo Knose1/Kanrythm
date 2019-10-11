@@ -8,14 +8,18 @@ using System.Threading.Tasks;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 {
-	public class Preload : Screen
+	public class Mapload : Screen
 	{
 		public override void OnAddedToHudContainer(HudContainer hudContainer)
 		{
 			base.OnAddedToHudContainer(hudContainer);
-			MapLoader.StartLoad();
-
-			
+			MapLoader.StartLoad(MapLoader_OnFinish);
 		}
+
+		private void MapLoader_OnFinish()
+		{
+			HudContainer.SetScreen(Instantiate(HudTemplates.menuTemplate));
+		}
+		
 	}
 }
