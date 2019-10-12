@@ -13,37 +13,40 @@ namespace Com.Github.Knose1.Kanrythm.Game
 {
 	class HudManager : MonoBehaviour
 	{
+		private static HudManager instance;
+		public static HudManager Instance { get => instance; }
+
 		[SerializeField] private GameManager gameManager;
 		[SerializeField] private HudContainer hudContainer;
 
-		[SerializeField] private Preload preloadTemplate;
+		[SerializeField] private Mapload mapLoadTemplate;
+		[SerializeField] private Menu menuTemplate;
 
+		public Mapload GetTemplateMapLoad() { return UnityEngine.Object.Instantiate(mapLoadTemplate, hudContainer.transform); }
+		public Menu GetTemplateMenu()	    { return UnityEngine.Object.Instantiate(menuTemplate, hudContainer.transform); }
+
+		private void Awake()
+		{
+			instance = this;
+		}
+		
 		private void Start()
 		{
 			gameManager.OnStart += GameManager_OnStart;
+			gameManager.OnEnd += GameManager_OnEnd;
 
-			Preload lTemplate = Instantiate(preloadTemplate);
-			hudContainer.SetScreen(lTemplate);
+			hudContainer.SetScreen(GetTemplateMapLoad());
 
 		}
 
 		private void GameManager_OnStart()
 		{
-			throw new NotImplementedException();
+			hudContainer.ClearScreen();
 		}
 
-		private void HudContainer_Awake(in Canvas canvas, in CanvasScaler canvasScaler, in GraphicRaycaster graphicRaycaster, in RectTransform rectTransform)
+		private void GameManager_OnEnd()
 		{
-			canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-			canvas.pixelPerfect = false;
-
-			canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-			canvasScaler.referenceResolution = new Vector2(2700, 1400);
-			canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Shrink;
-			canvasScaler.referencePixelsPerUnit = 100;
-
-			graphicRaycaster.ignoreReversedGraphics = true;
-			graphicRaycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
+			hudContainer.SetScreen(GetTemplateMenu());
 		}
 	}
 }

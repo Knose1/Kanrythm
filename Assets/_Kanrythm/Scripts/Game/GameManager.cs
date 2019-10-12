@@ -20,6 +20,9 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		/// </summary>
 		public bool autoClear = false;
 
+		public event Action OnStart;
+		public event Action OnEnd;
+
 		private RythmMusicPlayer musicPlayer;
 
 		[SerializeField]
@@ -44,13 +47,9 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			musicPlayer = GetComponent<RythmMusicPlayer>();
 		}
 
-		override protected void Start () {
-			base.Start();
-
-			MapLoader.StartLoad();
-		}
 		public void StartDefault(bool autoClear)
 		{
+
 			this.autoClear = autoClear;
 			LoadAndStartGame(MapLoader.Maplist[0], 0);
 		}
@@ -64,6 +63,8 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			musicLoaderEnumerator = musicLoader.GetAudioClip();
 
 			doAction = DoActionLoadMusic;
+
+			OnStart?.Invoke();
 		}
 
 		#region doAction
@@ -95,7 +96,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			}
 
 			musicPlayer.Play();
-			musicPlayer.onTimeSplit += LevelLoop;
+			musicPlayer.OnTimeSplit += LevelLoop;
 
 			gameContainer.SetActive(true);
 

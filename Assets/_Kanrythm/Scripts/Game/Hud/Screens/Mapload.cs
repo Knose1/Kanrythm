@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 {
@@ -18,7 +19,8 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 
 		private void MapLoader_OnFinish()
 		{
-			HudContainer.SetScreen(Instantiate(HudTemplates.menuTemplate));
+			Debug.Log("Map loader has finished");
+			HudContainer.SetScreen(HudManager.Instance.GetTemplateMenu());
 		}
 		
 	}

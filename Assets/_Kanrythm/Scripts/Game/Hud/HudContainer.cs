@@ -11,25 +11,41 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud
 {
 	public class HudContainer : MonoBehaviour
 	{
-		public event Action<Canvas, CanvasScaler, GraphicRaycaster, RectTransform> OnAwake;
+		private Screen currentScreen;
 
 		public void Awake()
 		{
-			Canvas lCanvas = gameObject.AddComponent<Canvas>();
-			CanvasScaler lCanvasScaler = gameObject.AddComponent<CanvasScaler>();
-			GraphicRaycaster lGraphicRaycaster = gameObject.AddComponent<GraphicRaycaster>();
-			RectTransform lRectTransform = gameObject.AddComponent<RectTransform>();
+			for (int childI = transform.childCount - 1; childI >= 0; childI--)
+			{
+				Transform screenTrans = transform.GetChild(childI);
+				Screen screenComp = screenTrans.GetComponent<Screen>();
+				if (!screenComp)
+				{
+					Destroy(screenTrans);
+					continue;
+				}
 
+				screenComp.OnRemovedFromHudContainer(this);
+			}
 		}
 
-		public void SetScreen(Preload preloadTemplate)
+		public void SetScreen(Screen screen)
 		{
-			throw new NotImplementedException();
+			if (currentScreen)
+			{
+				ClearScreen();
+			}
+
+			currentScreen = screen;
+			currentScreen.transform.parent = transform;
+			currentScreen.OnAddedToHudContainer(this);
 		}
 
 		public void ClearScreen()
 		{
-			throw new NotImplementedException();
+			
+			currentScreen.OnRemovedFromHudContainer(this);
+			currentScreen = null;
 		}
 	}
 }

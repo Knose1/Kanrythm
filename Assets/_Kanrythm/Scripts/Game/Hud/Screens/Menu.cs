@@ -10,10 +10,6 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 {
 	class Menu : Screen
 	{
-		public override void OnAddedToHudContainer(HudContainer hudContainer)
-		{
-			base.OnAddedToHudContainer(hudContainer);
-			MapLoader.StartLoad();
-		}
+		
 	}
 }

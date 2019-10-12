@@ -15,12 +15,13 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud
 		private HudContainer hudContainer;
 		public HudContainer HudContainer { get => hudContainer; }
 
-		virtual public void OnAddedToHudContainer(HudContainer hudContainer) {
+		virtual public void OnAddedToHudContainer(HudContainer hudContainer)
+		{
 			this.hudContainer = hudContainer;
-
 		}
-		virtual public void OnRemovedFromHudContainer(HudContainer hudContainer) {
-
+		virtual public void OnRemovedFromHudContainer(HudContainer hudContainer)
+		{
+			Destroy(gameObject);
 		}
 
 	}
