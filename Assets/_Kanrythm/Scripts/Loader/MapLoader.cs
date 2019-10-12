@@ -30,7 +30,7 @@ namespace Com.Github.Knose1.Kanrythm.Loader {
 			if (!streamingAssetsFolder.Exists) streamingAssetsFolder.Create();
 			if (!mapFolder.Exists) mapFolder.Create();
 
-			MapLoaderBehaviour lMapLoaderBehaviour = new GameObject().AddComponent<MapLoaderBehaviour>();
+			MapLoaderBehaviour lMapLoaderBehaviour = new GameObject("MapLoaderBehaviour").AddComponent<MapLoaderBehaviour>();
 			lMapLoaderBehaviour.enumerator = GetMapEnumerator();
 			lMapLoaderBehaviour.OnFinish += OnFinish;
 		}
@@ -77,7 +77,7 @@ namespace Com.Github.Knose1.Kanrythm.Loader {
 				OnFinish?.Invoke();
 				OnFinish = null;
 				doAction = DoActionVoid;
-				Destroy(this);
+				Destroy(gameObject);
 			}
 
 

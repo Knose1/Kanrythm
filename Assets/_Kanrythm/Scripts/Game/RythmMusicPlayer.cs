@@ -25,6 +25,8 @@ namespace Com.Github.Knose1.Kanrythm.Game
 		private StretchableDeltaTime stretchableDeltaTime;
 
 		public float playingSpeed = 1;
+		private float fadeOutTime = 0;
+		private float fadeTimestamp;
 
 		void OnValidate()
 		{
@@ -73,6 +75,12 @@ namespace Com.Github.Knose1.Kanrythm.Game
 			if (!stretchableDeltaTime.IsPlaying) return;
 			tryStartMusic();
 			updateTimeSplit();
+
+			if (fadeOutTime != 0)
+			{
+				Debug.Log((stretchableDeltaTime.ElapsedTime - fadeTimestamp) / fadeOutTime);
+				audioSource.volume = Mathf.Lerp(1, 0, (stretchableDeltaTime.ElapsedTime - fadeTimestamp) / fadeOutTime);
+			}
 		}
 
 		private void updateTimeSplit()
@@ -92,5 +100,10 @@ namespace Com.Github.Knose1.Kanrythm.Game
 			if (!audioSource.isPlaying && stretchableDeltaTime.ElapsedTime >= musicOffset) audioSource.Play();
 		}
 
+		public void StartFadeOut(float fadeOutTime)
+		{
+			this.fadeOutTime = fadeOutTime;
+			fadeTimestamp = stretchableDeltaTime.ElapsedTime;
+		}
 	}
 }

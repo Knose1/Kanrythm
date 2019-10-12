@@ -16,7 +16,6 @@ namespace Com.Github.Knose1.Kanrythm.Game
 		private static HudManager instance;
 		public static HudManager Instance { get => instance; }
 
-		[SerializeField] private GameManager gameManager;
 		[SerializeField] private HudContainer hudContainer;
 
 		[SerializeField] private Mapload mapLoadTemplate;
@@ -32,8 +31,8 @@ namespace Com.Github.Knose1.Kanrythm.Game
 		
 		private void Start()
 		{
-			gameManager.OnStart += GameManager_OnStart;
-			gameManager.OnEnd += GameManager_OnEnd;
+			GameManager.OnStart += GameManager_OnStart;
+			GameManager.OnEnd += GameManager_OnEnd;
 
 			hudContainer.SetScreen(GetTemplateMapLoad());
 
