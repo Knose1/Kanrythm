@@ -21,15 +21,26 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 
 		private Map() { }
 
+		public Exception LoadError { get; private set; }
+
 		public static Map GetMap(string directoryPath)
 		{
-			string lJsonString = HandleTextFile.ReadString(directoryPath + "/" + MAIN_JSON);
-			Map lMap = JsonUtility.FromJson<Map>(lJsonString);
+			Map lMap = new Map();
+			try
+			{
+				string lJsonString = HandleTextFile.ReadString(directoryPath + "/" + MAIN_JSON);
 
-			lMap.directoryPath = directoryPath;
+				lMap = JsonUtility.FromJson<Map>(lJsonString);
+
+				lMap.directoryPath = directoryPath;
 
 
-			lMap.audioType = AudioClipGetter.GetAudioType(lMap.audio);
+				lMap.audioType = AudioClipGetter.GetAudioType(lMap.audio);
+			}
+			catch (Exception error)
+			{
+				lMap.LoadError = error;
+			}
 
 			return lMap;
 		}
