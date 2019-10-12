@@ -7,12 +7,13 @@ namespace Com.Github.Knose1.Kanrythm.Game
 
 	public class RythmMusicPlayer : MonoBehaviour
 	{
+
 		private const float MINUTES_TO_SECONDS = 60f;
 
 		private const float NO_TIMESTAMP = -1;
 		public const float MIN_TIME_SPLITTING = 1 / 32f;
 
-		public event Action<float> onTimeSplit;
+		public event Action<float> OnTimeSplit;
 		private AudioSource audioSource;
 
 		private float timeByMinSplitting;
@@ -83,7 +84,7 @@ namespace Com.Github.Knose1.Kanrythm.Game
 
 			for (float i = lCurrentTimestamp; i > lMusicTimestamp; i -= timeByMinSplitting)
 			{
-				onTimeSplit(currentTimeSplitIndex++);
+				OnTimeSplit(currentTimeSplitIndex++);
 			}
 		}
 		private void tryStartMusic()
