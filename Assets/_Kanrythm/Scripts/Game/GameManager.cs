@@ -13,7 +13,33 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 	/// <summary>
 	/// Classe général du jeu : Elle s'occupe d'activer les différents états du jeu (load des map / ingame / menu)
 	/// </summary>
-	public class GameManager : StateMachine {
+	public class GameManager : StateMachine
+	{
+		#region GetInstance
+		private static GameManager instance;
+		public static GameManager Instance { get {
+				if (instance) return instance;
+
+				GameManager lNewGameManager = new GameObject("GameManager").AddComponent<GameManager>();
+
+				return instance = lNewGameManager;
+			}
+		}
+		#endregion
+
+		/// <summary>
+		/// The global offset (in seconds) all maps.									<br/>
+		/// When playing, the player must have a little time to check the controles.	<br/>
+		/// This is also used not to surprise the player.								<br/>
+		/// </summary>
+		private const float GLOBAL_MAP_OFFSET_BEFORE_START_MAP = 1;
+
+		/// <summary>
+		/// The global offset (in seconds) all maps.									<br/>
+		/// When playing, the player must have a little time to check the controles.	<br/>
+		/// This is also used not to surprise the player.								<br/>
+		/// </summary>
+		private const float GLOBAL_MAP_OFFSET_BFORE_END_MAP = 5;
 
 		/// <summary>
 		/// Is autoClear is enabled, the beats will automatiquely be destroyed at the end of his move
@@ -21,15 +47,17 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		public bool autoClear = false;
 
 		private RythmMusicPlayer musicPlayer;
-
-		[SerializeField]
 		private GameObject gameContainer;
-
-		[SerializeField]
+		private SpriteRenderer blackOverlay;
 		private Player player;
 
-		[SerializeField]
-		private GameObject beatPrefab;
+		private float fadeOutTime = 0;
+		private float fadeTimestamp;
+
+		#region Events
+		public static event Action OnStart;
+		public static event Action OnEnd;
+		#endregion
 
 		#region map
 		private AudioClipGetter musicLoader;
@@ -37,22 +65,42 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 
 		private Map map;
 		private Difficulty currentDiff;
+		private bool hasStartedDestroy = false;
 		#endregion map
 
 		private void Awake()
 		{
-			musicPlayer = GetComponent<RythmMusicPlayer>();
+			musicPlayer = gameObject.AddComponent<RythmMusicPlayer>();
+			instance = this;
 		}
 
-		override protected void Start () {
+		override protected void Start()
+		{
+			transform.parent = GameRootAndObjectLibrary.Instance.ManagerContainer;
+
 			base.Start();
-
-			MapLoader.StartLoad();
 		}
-		public void StartDefault(bool autoClear)
+
+		private void OnDestroy()
+		{
+			OnEnd?.Invoke();
+			Destroy(player);
+			Destroy(gameContainer);
+			Destroy(blackOverlay);
+
+			instance = null;
+		}
+
+		public void StartMap(uint currentMap = 0, uint difficulty = 0, bool autoClear = false)
 		{
 			this.autoClear = autoClear;
 			LoadAndStartGame(MapLoader.Maplist[0], 0);
+
+			gameContainer = new GameObject("GameContainer");
+			blackOverlay = Instantiate(GameRootAndObjectLibrary.Instance.BlackBackground);
+			blackOverlay.enabled = false;
+
+			player = Instantiate(GameRootAndObjectLibrary.Instance.PlayerPrefab, gameContainer.transform);
 		}
 
 		private void LoadAndStartGame(Map map, uint difficultyIndex)
@@ -64,6 +112,8 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			musicLoaderEnumerator = musicLoader.GetAudioClip();
 
 			doAction = DoActionLoadMusic;
+
+			OnStart?.Invoke();
 		}
 
 		#region doAction
@@ -85,6 +135,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		private void DoActionStartGame()
 		{
 			musicPlayer.musicOffset = currentDiff.ApproachRate;
+
 			if (map.timing.offset >= 0)
 			{
 				musicPlayer.timeSplitOffset = map.timing.offset;
@@ -94,56 +145,74 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 				musicPlayer.musicOffset -= map.timing.offset;
 			}
 
+			musicPlayer.musicOffset		+= GLOBAL_MAP_OFFSET_BEFORE_START_MAP;
+			musicPlayer.timeSplitOffset += GLOBAL_MAP_OFFSET_BEFORE_START_MAP;
+
 			musicPlayer.Play();
-			musicPlayer.onTimeSplit += LevelLoop;
+			musicPlayer.OnTimeSplit += LevelLoop;
 
 			gameContainer.SetActive(true);
 
 			doAction = DoActionVoid;
 		}
+		
+		private void DoActionFadeOut()
+		{
+			float timeRatio = (StretchableDeltaTime.Instance.ElapsedTime - fadeTimestamp) / fadeOutTime;
+			musicPlayer.Volume = Mathf.Lerp(1, 0, timeRatio);
 
+			Color lColor = blackOverlay.color;
+			lColor.a = Mathf.Lerp(0, 1, timeRatio);
+			blackOverlay.color = lColor;
+		}
+		#endregion doAction
+		
 		/// <summary>
 		/// Fonction dans laquelle est créé les notes
 		/// </summary>
 		/// <param name="timeSplit"></param>
 		private void LevelLoop(float timeSplit)
 		{
+
 			float lDiffTimeSplit = timeSplit / (currentDiff.TimeSplitting / RythmMusicPlayer.MIN_TIME_SPLITTING);
 
-			//Debug.Log(lDiffTimeSplit+":"+currentDiff.TimeLine.Length);
+			//Are we on a timesplit ?
+			if (((int)lDiffTimeSplit) != lDiffTimeSplit) return; //If not, return
 
-			if (((int)lDiffTimeSplit) != lDiffTimeSplit) return;
+			//Has the map ended ?
+			if (lDiffTimeSplit >= currentDiff.TimeLine.Length)
+			{
+				if (hasStartedDestroy) return;
 
-			if (lDiffTimeSplit >= currentDiff.TimeLine.Length) return;
+				fadeOutTime = GLOBAL_MAP_OFFSET_BFORE_END_MAP - 1;
+				fadeTimestamp = StretchableDeltaTime.Instance.ElapsedTime;
 
-			//Debug.Log(lDiffTimeSplit+":"+currentDiff.TimeLine[(int)lDiffTimeSplit].rotation);
-			//Debug.Log(lDiffTimeSplit+":"+currentDiff.TimeLine[(int)lDiffTimeSplit].rotation2);
+				blackOverlay.enabled = true;
+				doAction = DoActionFadeOut;
 
-			// TODO : Le jeu doit réagir avant le timeSplit
-			// TODO : Création des beats
+				Destroy(gameObject, GLOBAL_MAP_OFFSET_BFORE_END_MAP);
 
+				hasStartedDestroy = true;
+
+				return;
+			}
+
+
+
+			//Get the current KeyTime
 			KeyTime lCurrentKey = currentDiff.TimeLine[(int)lDiffTimeSplit];
 
+			//Create Beat(s)
 			CreateBeat(lCurrentKey.rotation, lCurrentKey.rotation2);
 
-
-			/*
-			var lRotation = gameContainer.transform.rotation;
-				
-			lRotation.eulerAngles = new Vector3(0, 0, currentDiff.TimeLine[(int)lDiffTimeSplit].rotation);
-
-			gameContainer.transform.rotation = lRotation;
-			*/
 		}
-		#endregion doAction
 
-
+		#region CreateBeat
 		private void CreateBeat(float rotation, float rotation2)
 		{
 			CreateBeat(rotation);
 			CreateBeat(rotation2);
 		}
-
 		private void CreateBeat(float rotation)
 		{
 
@@ -151,13 +220,13 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 
 			Debug.Log(rotation + "/" + float.IsNaN(rotation));
 
-			GameObject lBeat = Instantiate(beatPrefab, gameContainer.transform);
+			Beat lBeat = Instantiate(GameRootAndObjectLibrary.Instance.BeatPrefab, gameContainer.transform);
 
-			Beat lBeatComponent = lBeat.GetComponent<Beat>();
-			lBeatComponent.target = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)) * player.GetCannonRadius();
-			lBeatComponent.travelTime = currentDiff.ApproachRate;
-			lBeatComponent.EnablePlay();
-			lBeatComponent.autoClear = autoClear;
+			lBeat.target = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)) * player.GetCannonRadius();
+			lBeat.travelTime = currentDiff.ApproachRate;
+			lBeat.EnablePlay();
+			lBeat.autoClear = autoClear;
 		}
+		#endregion
 	}
 }

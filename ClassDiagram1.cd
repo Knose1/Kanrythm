@@ -246,6 +246,13 @@
     </TypeIdentifier>
     <Lollipop Orientation="Left" Position="0.117" />
   </Class>
+  <Class Name="Com.Github.Knose1.Kanrythm.Game.Hud.HudManager">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Kanrythm\Scripts\Game\Hud\HudManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="Com.Github.Knose1.Kanrythm.Data.MapTimingData" Collapsed="true">
     <Position X="34.5" Y="2" Width="1.5" />
     <TypeIdentifier>

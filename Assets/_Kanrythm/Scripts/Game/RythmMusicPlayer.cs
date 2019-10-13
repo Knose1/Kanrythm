@@ -7,12 +7,13 @@ namespace Com.Github.Knose1.Kanrythm.Game
 
 	public class RythmMusicPlayer : MonoBehaviour
 	{
+
 		private const float MINUTES_TO_SECONDS = 60f;
 
 		private const float NO_TIMESTAMP = -1;
 		public const float MIN_TIME_SPLITTING = 1 / 32f;
 
-		public event Action<float> onTimeSplit;
+		public event Action<float> OnTimeSplit;
 		private AudioSource audioSource;
 
 		private float timeByMinSplitting;
@@ -25,6 +26,8 @@ namespace Com.Github.Knose1.Kanrythm.Game
 
 		public float playingSpeed = 1;
 
+		public float Volume { get => audioSource.volume; set => audioSource.volume = value; }
+
 		void OnValidate()
 		{
 			playingSpeed = Mathf.Max(Mathf.Round(playingSpeed / 0.25f) * 0.25f, 0.01f);
@@ -36,6 +39,10 @@ namespace Com.Github.Knose1.Kanrythm.Game
 			stretchableDeltaTime = gameObject.AddComponent<StretchableDeltaTime>();
 		}
 
+		private void OnDestroy()
+		{
+			Stop();
+		}
 
 		public void SetMusic(MapTimingData timingInfo, AudioClip currentMusic)
 		{
@@ -83,7 +90,7 @@ namespace Com.Github.Knose1.Kanrythm.Game
 
 			for (float i = lCurrentTimestamp; i > lMusicTimestamp; i -= timeByMinSplitting)
 			{
-				onTimeSplit(currentTimeSplitIndex++);
+				OnTimeSplit(currentTimeSplitIndex++);
 			}
 		}
 		private void tryStartMusic()
