@@ -51,7 +51,7 @@ namespace Com.Github.Knose1.Kanrythm
 
 		public void StopDeltaTime()
 		{
-			doAction = DoActionNormal;
+			doAction = DoActionVoid;
 			startTime = -1;
 			scaleTime = 1;
 			elapsedTime = 0;

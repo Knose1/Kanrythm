@@ -48,7 +48,11 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 
 		private RythmMusicPlayer musicPlayer;
 		private GameObject gameContainer;
+		private SpriteRenderer blackOverlay;
 		private Player player;
+
+		private float fadeOutTime = 0;
+		private float fadeTimestamp;
 
 		#region Events
 		public static event Action OnStart;
@@ -82,6 +86,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			OnEnd?.Invoke();
 			Destroy(player);
 			Destroy(gameContainer);
+			Destroy(blackOverlay);
 
 			instance = null;
 		}
@@ -92,6 +97,9 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			LoadAndStartGame(MapLoader.Maplist[0], 0);
 
 			gameContainer = new GameObject("GameContainer");
+			blackOverlay = Instantiate(GameRootAndObjectLibrary.Instance.BlackBackground);
+			blackOverlay.enabled = false;
+
 			player = Instantiate(GameRootAndObjectLibrary.Instance.PlayerPrefab, gameContainer.transform);
 		}
 
@@ -147,6 +155,16 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 
 			doAction = DoActionVoid;
 		}
+		
+		private void DoActionFadeOut()
+		{
+			float timeRatio = (StretchableDeltaTime.Instance.ElapsedTime - fadeTimestamp) / fadeOutTime;
+			musicPlayer.Volume = Mathf.Lerp(1, 0, timeRatio);
+
+			Color lColor = blackOverlay.color;
+			lColor.a = Mathf.Lerp(0, 1, timeRatio);
+			blackOverlay.color = lColor;
+		}
 		#endregion doAction
 		
 		/// <summary>
@@ -165,7 +183,13 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			if (lDiffTimeSplit >= currentDiff.TimeLine.Length)
 			{
 				if (hasStartedDestroy) return;
-				musicPlayer.StartFadeOut(GLOBAL_MAP_OFFSET_BFORE_END_MAP);
+
+				fadeOutTime = GLOBAL_MAP_OFFSET_BFORE_END_MAP - 1;
+				fadeTimestamp = StretchableDeltaTime.Instance.ElapsedTime;
+
+				blackOverlay.enabled = true;
+				doAction = DoActionFadeOut;
+
 				Destroy(gameObject, GLOBAL_MAP_OFFSET_BFORE_END_MAP);
 
 				hasStartedDestroy = true;

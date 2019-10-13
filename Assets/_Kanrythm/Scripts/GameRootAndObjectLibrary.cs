@@ -8,8 +8,8 @@ namespace Com.Github.Knose1.Kanrythm
 	{
 
 		private static GameRootAndObjectLibrary instance;
+
 		[SerializeField] private Transform managerContainer;
-		
 		public Transform ManagerContainer { get => managerContainer; }
 
 		[SerializeField] private Player playerPrefab;
@@ -17,6 +17,9 @@ namespace Com.Github.Knose1.Kanrythm
 
 		[SerializeField] private Beat beatPrefab;
 		public Beat BeatPrefab { get => beatPrefab; }
+
+		[SerializeField] private SpriteRenderer blackBackground;
+		public SpriteRenderer BlackBackground { get => blackBackground; }
 
 		/// <summary>
 		/// instance unique de la classe     

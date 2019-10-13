@@ -1,5 +1,6 @@
 using Com.Github.Knose1.Common;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
@@ -17,8 +18,11 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 		[SerializeField] private CanonState cannon2NoLine;
 		[SerializeField] private string inputClickCannon2NoLine;
 
+		private SpriteRenderer[] childrenRenderer;
+		private List<float> childrenOriginalAlpha;
+
 		/// <summary>
-		/// Donne le contr�le au joueur
+		/// Give the controle to the player
 		/// </summary>
 		public void EnablePlay()
 		{
@@ -28,6 +32,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 
 		Vector3 vecBeforeCannonLock = Vector3.right;
 		float mouseVsCannonAngleDelta = 0;
+
+		private float alpha = 1;
+		public float Alpha { get => alpha; set {
+				
+			}
+		}
 
 		override protected void DoActionNormal()
 		{
