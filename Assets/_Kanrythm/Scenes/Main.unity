@@ -780,6 +780,8 @@ MonoBehaviour:
     type: 3}
   beatPrefab: {fileID: 4639949773032213012, guid: 372bc9f6d9c105048900f0ab6c3c53fa,
     type: 3}
+  blackBackground: {fileID: 6726788699511911133, guid: acb05e623ee948d42a7b63ea55d2963a,
+    type: 3}
 --- !u!1001 &4228222991997419820
 PrefabInstance:
   m_ObjectHideFlags: 0
