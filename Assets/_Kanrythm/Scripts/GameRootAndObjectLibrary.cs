@@ -22,7 +22,7 @@ namespace Com.Github.Knose1.Kanrythm
 		public SpriteRenderer BlackBackground { get => blackBackground; }
 
 		/// <summary>
-		/// instance unique de la classe     
+		/// Unique instance of the classe     
 		/// </summary>
 		public static GameRootAndObjectLibrary Instance
 		{
