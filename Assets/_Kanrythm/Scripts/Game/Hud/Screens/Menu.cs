@@ -15,10 +15,19 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 		[SerializeField] private Button buttonPlay;
 		[SerializeField] private Button buttonPlayInAutoplayMode;
 
-		private void Awake()
+		public override void OnAddedToHudContainer(HudContainer hudContainer)
 		{
+			base.OnAddedToHudContainer(hudContainer);
 			buttonPlay				.onClick.AddListener(Button_OnClick_Play);
 			buttonPlayInAutoplayMode.onClick.AddListener(Button_OnClick_Autoplay);
+		}
+
+		public override void OnRemovedFromHudContainer(HudContainer hudContainer)
+		{
+			buttonPlay				.onClick.RemoveAllListeners();
+			buttonPlayInAutoplayMode.onClick.RemoveAllListeners();
+
+			base.OnRemovedFromHudContainer(hudContainer);
 		}
 
 		private void Button_OnClick_Play()
