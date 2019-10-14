@@ -13,7 +13,7 @@ namespace Com.Github.Knose1.Kanrythm
 		public Transform ManagerContainer { get => managerContainer; }
 
 		[SerializeField] private Player playerPrefab;
-		public Player PlayerPrefab => playerPrefab;
+		public Player PlayerPrefab { get => playerPrefab; }
 
 		[SerializeField] private Beat beatPrefab;
 		public Beat BeatPrefab { get => beatPrefab; }
