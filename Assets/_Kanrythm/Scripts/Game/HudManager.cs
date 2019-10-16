@@ -19,10 +19,10 @@ namespace Com.Github.Knose1.Kanrythm.Game
 		[SerializeField] private HudContainer hudContainer;
 
 		[SerializeField] private Mapload mapLoadTemplate;
-		[SerializeField] private Menu menuTemplate;
+		[SerializeField] private MenuPlayMap menuTemplate;
 
 		public Mapload GetTemplateMapLoad() { return UnityEngine.Object.Instantiate(mapLoadTemplate, hudContainer.transform); }
-		public Menu GetTemplateMenu()	    { return UnityEngine.Object.Instantiate(menuTemplate, hudContainer.transform); }
+		public MenuPlayMap GetTemplateMenu()	    { return UnityEngine.Object.Instantiate(menuTemplate, hudContainer.transform); }
 
 		private void Awake()
 		{

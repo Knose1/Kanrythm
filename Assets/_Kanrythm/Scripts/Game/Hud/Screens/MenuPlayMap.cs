@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 {
-	class Menu : Screen
+	class MenuPlayMap : Screen
 	{
 		[SerializeField] private Button buttonPlay;
 		[SerializeField] private Button buttonPlayInAutoplayMode;

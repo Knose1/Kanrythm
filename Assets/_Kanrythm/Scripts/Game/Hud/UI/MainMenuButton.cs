@@ -1,22 +1,26 @@
-///-----------------------------------------------------------------
-/// Author : AymerickHebert
-/// Date : 16/10/2019 12:29
-///-----------------------------------------------------------------
-
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud {
-	public class MainMenuButton : MonoBehaviour {
+	public class MainMenuButton : Button {
 
-		[SerializeField] string buttonText = "button";
-		[SerializeField] Text buttonTextComponent;
-
-		private void OnValidate()
+		private string buttonText = "button";
+		protected string ButtonText
 		{
-			if (!buttonTextComponent) buttonTextComponent = GetComponentInChildren<Text>();
+			get => buttonText;
+			set
+			{
+				buttonTextComponent.text = buttonText;
+			}
+		}
 
-			buttonTextComponent.text = buttonText;
+		protected Text buttonTextComponent;
+
+
+		override protected void Awake()
+		{
+			base.Start();
+			if (!buttonTextComponent) buttonTextComponent = GetComponentInChildren<Text>();
 		}
 	}
 }

@@ -794,6 +794,35 @@ MonoBehaviour:
     type: 3}
   blackBackground: {fileID: 6726788699511911133, guid: acb05e623ee948d42a7b63ea55d2963a,
     type: 3}
+  difficultyColors:
+    serializedVersion: 2
+    key0: {r: 0.35076782, g: 0, b: 0.4811321, a: 1}
+    key1: {r: 0.4716981, g: 0, b: 0, a: 1}
+    key2: {r: 1, g: 0, b: 0, a: 0}
+    key3: {r: 1, g: 0.5019608, b: 0, a: 0}
+    key4: {r: 1, g: 1, b: 0, a: 0}
+    key5: {r: 0, g: 0.8392157, b: 0.25098035, a: 0}
+    key6: {r: 0, g: 0.63529414, b: 0.21568628, a: 0}
+    key7: {r: 0, g: 0.63529414, b: 0.21568628, a: 0}
+    ctime0: 0
+    ctime1: 1311
+    ctime2: 21823
+    ctime3: 32768
+    ctime4: 43712
+    ctime5: 58982
+    ctime6: 65535
+    ctime7: 65535
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 7
+    m_NumAlphaKeys: 2
 --- !u!1001 &4228222991997419820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1075,180 +1104,124 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3123729158602157213, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 1937953215, guid: f3c5ae12148254740b5ed7a7b25aa9f2, type: 3}
+      propertyPath: m_Name
+      value: MapContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283302989642234938, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283302989642234938, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.7000122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178032985217900841, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+        type: 3}
+      propertyPath: m_Text
+      value: The field of dreams
+      objectReference: {fileID: 0}
+    - target: {fileID: 6680001786062439064, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3123729158602157213, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 6680001786062439064, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3123729158602157213, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 6680001786062439064, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3123729158602157213, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 6680001786062439064, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699190488830, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 5097707812639443940, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699190488830, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 5097707812639443940, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699190488830, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 5097707812639443940, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699190488830, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 5097707812639443940, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209700619085492, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 6972249288393663991, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209700619085492, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 6972249288393663991, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209700619085492, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 6972249288393663991, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209700619085492, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 6972249288393663991, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699712997884, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 9174483045064237612, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
+      propertyPath: map.difficulties.Array.size
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699712997884, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 9174483045064237612, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
+      propertyPath: map.name
+      value: The field of dreams
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699712997884, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 9174483045064237612, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
+      propertyPath: buttonText
+      value: The field of dreams
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699712997884, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 9174483045064237612, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
+      propertyPath: map.audio
+      value: level.ogg
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699649780982, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 9174483045064237612, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
+      propertyPath: map.difficulties.Array.data[0]
+      value: Easy
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699649780982, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 9174483045064237612, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
+      propertyPath: map.timing.bpm
+      value: 144
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699649780982, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 9174483045064237612, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
+      propertyPath: map.timing.timeSignature
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 3322209699649780982, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
+    - target: {fileID: 9174483045064237612, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322209698853076442, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322209698853076442, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322209698853076442, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322209698853076442, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322209700810765411, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322209700810765411, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322209700810765411, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3322209700810765411, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377659652863834135, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377659653058030272, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377659653374325386, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377659653724713390, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377659653896836488, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7377659653967835266, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7143233878801670377, guid: f3c5ae12148254740b5ed7a7b25aa9f2,
-        type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
+      propertyPath: map.directoryPath
+      value: C:\Users\Knose1\Desktop\Projects\Unity\Kanrythm reborn\Kanrythm\Assets\StreamingAssets\Map
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3c5ae12148254740b5ed7a7b25aa9f2, type: 3}

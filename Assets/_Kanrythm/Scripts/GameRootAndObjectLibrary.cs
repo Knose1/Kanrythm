@@ -1,4 +1,5 @@
 ﻿using Com.Github.Knose1.Kanrythm.Game.BeatObject;
+using Com.Github.Knose1.Kanrythm.Game.Hud.UI;
 using Com.Github.Knose1.Kanrythm.Game.PlayerType;
 using System;
 using UnityEngine;
@@ -20,6 +21,12 @@ namespace Com.Github.Knose1.Kanrythm
 
 		[SerializeField] private SpriteRenderer blackBackground;
 		public SpriteRenderer BlackBackground { get => blackBackground; }
+
+		[SerializeField] private DifficultyButton difficultyButtonPrefab;
+		public DifficultyButton DifficultyButtonPrefab { get => difficultyButtonPrefab; }
+
+		[SerializeField] private Gradient difficultyColors;
+		public Gradient DifficultyColors { get => difficultyColors; }
 
 		/// <summary>
 		/// Unique instance of the classe     
