@@ -10,6 +10,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 			get => buttonText;
 			set
 			{
+				if (!buttonTextComponent) buttonTextComponent = GetComponentInChildren<Text>();
 				buttonTextComponent.text = buttonText;
 			}
 		}
@@ -20,7 +21,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 		override protected void Awake()
 		{
 			base.Start();
-			if (!buttonTextComponent) buttonTextComponent = GetComponentInChildren<Text>();
+			
 		}
 	}
 }

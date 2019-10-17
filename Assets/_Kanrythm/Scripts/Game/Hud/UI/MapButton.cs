@@ -1,4 +1,5 @@
 using Com.Github.Knose1.Kanrythm.Data;
+using Com.Github.Knose1.Kanrythm.Loader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +13,25 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 {
 	class MapButton : MainMenuButton
 	{
-		const float NO_IMAGE = 200;
-		const float NO_BG_SELECTED = 300;
-		const float IMAGE	 = 300;
-		const float IMAGE_BG = 500;
+		const float NOT_SELECTED = 193;
+		const float SELECTED	 = 300;
 
 		private List<Difficulty> difficulties = new List<Difficulty>();
-		[NonSerialized] public int mapId;
+		[NonSerialized] public int mapId = -1;
 		private Map map;
 		private bool mapHasABackground;
 
 		override protected void Start()
 		{
+			base.Start();
+
+			if (!Application.isPlaying) return;
+
 			onClick.AddListener(Button_OnClick);
+
+			GetComponentInParent<MapButtonContainer>().SetScaleY(NOT_SELECTED);
+
+			map = MapLoader.Maplist[mapId];
 
 			ButtonText = map.name;
 			//GameRootAndObjectLibrary.Instance.DifficultyColors;
@@ -41,7 +48,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 				lButton.SetDificultyName(difficulties[i]);
 				lButton.SetDificultyIndex(i);
 			}
-			
+
 		}
 
 		protected override void OnValidate()
@@ -52,19 +59,13 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 
 		private void Button_OnClick()
 		{
-			float lHeightToSet = mapHasABackground ? IMAGE_BG : NO_BG_SELECTED;
-
-			Vector2 lVec = ((RectTransform)transform.parent).sizeDelta;
-
-			lVec.y = lHeightToSet;
-
-			((RectTransform)transform.parent).sizeDelta = lVec;
+			GetComponentInParent<MapButtonContainer>().SetScaleY(SELECTED);
 		}
 
 		public override void OnDeselect(BaseEventData eventData)
 		{
 			base.OnDeselect(eventData);
-			Debug.Log("hi");
+			GetComponentInParent<MapButtonContainer>().SetScaleY(NOT_SELECTED);
 		}
 	}
 }

@@ -1,3 +1,4 @@
+using Com.Github.Knose1.Assets._Kanrythm.Scripts.Game.Hud.Screens;
 using Com.Github.Knose1.Kanrythm.Game;
 using Com.Github.Knose1.Kanrythm.Game.Hud;
 using Com.Github.Knose1.Kanrythm.Game.Hud.Screens;
@@ -19,10 +20,10 @@ namespace Com.Github.Knose1.Kanrythm.Game
 		[SerializeField] private HudContainer hudContainer;
 
 		[SerializeField] private Mapload mapLoadTemplate;
-		[SerializeField] private MenuPlayMap menuTemplate;
+		[SerializeField] private Menu menuTemplate;
 
 		public Mapload GetTemplateMapLoad() { return UnityEngine.Object.Instantiate(mapLoadTemplate, hudContainer.transform); }
-		public MenuPlayMap GetTemplateMenu()	    { return UnityEngine.Object.Instantiate(menuTemplate, hudContainer.transform); }
+		public Menu GetTemplateMenu()	    { return UnityEngine.Object.Instantiate(menuTemplate, hudContainer.transform); }
 
 		private void Awake()
 		{
