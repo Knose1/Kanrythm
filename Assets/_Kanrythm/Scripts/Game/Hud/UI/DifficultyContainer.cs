@@ -38,7 +38,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 				lButton.GetComponent<Image>().color = difficultyColors.Evaluate(lLerp);
 				lButton.GetComponentInChildren<Text>().color = difficultyTextColors.Evaluate(lLerp);
 
-				lButton.OnSelectedDifficulty += Button_OnSelectedDifficulty;
+				lButton.OnSelectedDifficulty += LButton_OnSelectedDifficulty;
 
 				difficultyButtons.Add(lButton);
 			}
@@ -46,7 +46,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 
 		}
 
-		private void Button_OnSelectedDifficulty(int diff)
+		private void LButton_OnSelectedDifficulty(int diff)
 		{
 			OnSelectedDifficulty?.Invoke(diff);
 		}
@@ -76,9 +76,16 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 
 			float minX = -(difficultyButtons.Count - rightDifficultyButtonSpacing) * (((RectTransform)difficultyButtonPrefab.transform).sizeDelta.x - spacing);
 			float maxX = 0;
+
+			if (minX > maxX) minX = maxX;
+
 			lPos.x = Mathf.Clamp(lPos.x, minX, maxX);
 
 			transform.localPosition = lPos;
+
+
+			Debug.Log(minX + " : " + maxX + " : " + lPos.x + " : " + inputHorizontal);
+
 		}
 
 		protected void OnDestroy()

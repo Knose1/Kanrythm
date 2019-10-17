@@ -21,6 +21,8 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 		/// </summary>
 		public event Action<int, int> OnSelectedMapAndDifficulty;
 
+		private MapButtonContainer currentSelectedMap;
+
 		private void Start () {
 			int mapCount = MapLoader.Maplist.Count;
 
@@ -30,10 +32,30 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 				//TODO : Add the events and don't forget to destroy them onDestroy
 
 				lButtonContainer.MapButton.mapId = i;
-				lButtonContainer.OnSelectedMapAndDifficulty += OnSelectedMapAndDifficulty;
+				lButtonContainer.OnSelectedMapAndDifficulty += LButtonContainer_OnSelectedMapAndDifficulty;
+				lButtonContainer.OnSelectMap += LButtonContainer_OnSelectMap; ;
 
 				mapContainers.Add(lButtonContainer);
 			}
+		}
+
+		private void LButtonContainer_OnSelectMap(MapButtonContainer obj)
+		{
+			currentSelectedMap?.MapButton.Unfocus();
+
+			currentSelectedMap = obj;
+
+			currentSelectedMap.MapButton.Focus();
+		}
+
+		private void LButtonContainer_OnSelectedMapAndDifficulty(int mapId, int diffId)
+		{
+			OnSelectedMapAndDifficulty?.Invoke(mapId, diffId);
+		}
+
+		private void Update()
+		{
+			
 		}
 	}
 }

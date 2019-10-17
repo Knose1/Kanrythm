@@ -39,10 +39,10 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 			DifficultyContainer lDiffContainer = GetComponentInChildren<DifficultyContainer>();
 			
 			lDiffContainer.GenerateDifficultyButtons(map);
-			lDiffContainer.OnSelectedDifficulty += DiffContainer_OnSelectedDifficulty;
+			lDiffContainer.OnSelectedDifficulty += LDiffContainer_OnSelectedDifficulty;
 		}
 
-		private void DiffContainer_OnSelectedDifficulty(int diffId)
+		private void LDiffContainer_OnSelectedDifficulty(int diffId)
 		{
 			OnSelectedMapAndDifficulty?.Invoke(mapId, diffId);
 		}
@@ -55,11 +55,8 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 			OnSelectedMapAndDifficulty = null;
 		}
 
-		private void Button_OnClick()
+		public void Focus()
 		{
-			if (currentSelectionState == SelectionState.Selected) {	return;}
-
-			OnSelectMap?.Invoke(mapId);
 
 			GetComponentInChildren<DifficultyContainer>().OnMapSelect(mapId);
 			GetComponentInChildren<Text>().color = Color.white;
@@ -67,18 +64,27 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 			Select();
 		}
 
-		private void OnSelectionChange(BaseEventData eventData)
+		public void Unfocus()
 		{
-			if (eventData.selectedObject != gameObject && eventData.selectedObject.GetComponentInParent<MapButton>() == this) {
-				Select();
-				return;
-			}
-
 			OnDeselectMap?.Invoke(mapId);
 
 			GetComponentInChildren<DifficultyContainer>().OnMapDeselect(mapId);
 			GetComponentInChildren<Text>().color = Color.black;
+
+			base.OnDeselect(null);
 		}
+
+		private void Button_OnClick()
+		{
+			if (currentSelectionState == SelectionState.Selected) {	return;}
+
+			OnSelectMap?.Invoke(mapId);
+		}
+
+		/// <summary>
+		/// Empty, use base.OnDeselect instead
+		/// </summary>
+		public override void OnDeselect(BaseEventData eventData) {}
 
 		protected override void OnValidate()
 		{

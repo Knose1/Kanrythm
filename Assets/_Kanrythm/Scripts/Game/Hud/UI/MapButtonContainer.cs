@@ -23,6 +23,8 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 		[SerializeField] private RectTransform mask2;
 		[SerializeField] private Shadow mapButtonShadow;
 		[SerializeField] private MapButton mapButton;
+		public event Action<MapButtonContainer> OnSelectMap;
+
 		public MapButton MapButton { get => mapButton; }
 
 		/// <summary>
@@ -36,9 +38,14 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 			mapButton = GetComponentInChildren<MapButton>();
 			mapButton.OnSelectMap += MapButton_OnSelectMap;
 			mapButton.OnDeselectMap += MapButton_OnDeselectMap;
-			mapButton.OnSelectedMapAndDifficulty += OnSelectedMapAndDifficulty;
+			mapButton.OnSelectedMapAndDifficulty += MapButton_OnSelectedMapAndDifficulty; ;
 
 			SetScaleY(notSelectedHeight);
+		}
+
+		private void MapButton_OnSelectedMapAndDifficulty(int mapId, int difficultyId)
+		{
+			OnSelectedMapAndDifficulty?.Invoke(mapId, difficultyId);
 		}
 
 		private void OnDestroy()
@@ -71,6 +78,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 		private void MapButton_OnSelectMap(int mapId)
 		{
 			SetScaleY(selectedHeight);
+			OnSelectMap?.Invoke(this);
 		}
 	}
 }
