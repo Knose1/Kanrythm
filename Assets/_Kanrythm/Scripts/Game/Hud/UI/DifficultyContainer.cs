@@ -83,9 +83,6 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 
 			transform.localPosition = lPos;
 
-
-			Debug.Log(minX + " : " + maxX + " : " + lPos.x + " : " + inputHorizontal);
-
 		}
 
 		protected void OnDestroy()

@@ -6,7 +6,7 @@
 ; Beats           :  Beat                                Beat                                Beat
 ; timeSplitting   :  1/4      2/4      3/4      4/4      1/4      2/4      3/4      4/4      1/4
 ; timeline        :   |--------|--------|--------|--------|--------|--------|--------|--------|
-; mapping indexes :   1        2        3        4        5        6        7        8        9
+; mapping indexes :   0        1        2        3        4        5        6        7        8
 
 timeSplitting = 1
 
