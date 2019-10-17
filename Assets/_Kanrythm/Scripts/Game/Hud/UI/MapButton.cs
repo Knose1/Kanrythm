@@ -5,21 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 {
+	/// <summary>
+	/// The main button of a map button, it's contained in the MapButtonContainer
+	/// </summary>
 	class MapButton : MainMenuButton
 	{
-		const float NOT_SELECTED = 193;
-		const float SELECTED	 = 300;
-
 		private List<Difficulty> difficulties = new List<Difficulty>();
 		[NonSerialized] public int mapId = -1;
 		private Map map;
-		private bool mapHasABackground;
+
+		public event Action<int> OnDeselectMap;
+		public event Action<int> OnSelectMap;
+		public event Action<int, int> OnSelectedMapAndDifficulty;
 
 		override protected void Start()
 		{
@@ -29,43 +33,57 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 
 			onClick.AddListener(Button_OnClick);
 
-			GetComponentInParent<MapButtonContainer>().SetScaleY(NOT_SELECTED);
-
 			map = MapLoader.Maplist[mapId];
-
 			ButtonText = map.name;
-			//GameRootAndObjectLibrary.Instance.DifficultyColors;
 
-			mapHasABackground = map.background.Length > 0;
+			DifficultyContainer lDiffContainer = GetComponentInChildren<DifficultyContainer>();
+			
+			lDiffContainer.GenerateDifficultyButtons(map);
+			lDiffContainer.OnSelectedDifficulty += DiffContainer_OnSelectedDifficulty;
+		}
 
-			List<string> difficulties = map.difficulties;
+		private void DiffContainer_OnSelectedDifficulty(int diffId)
+		{
+			OnSelectedMapAndDifficulty?.Invoke(mapId, diffId);
+		}
 
-			DifficultyButton lButton;
+		override protected void OnDestroy()
+		{
+			base.OnDestroy();
+			OnSelectMap = null;
+			OnDeselectMap = null;
+			OnSelectedMapAndDifficulty = null;
+		}
 
-			for (int i = - 1; i >= 0; i--)
-			{
-				lButton = Instantiate(GameRootAndObjectLibrary.Instance.DifficultyButtonPrefab, transform);
-				lButton.SetDificultyName(difficulties[i]);
-				lButton.SetDificultyIndex(i);
+		private void Button_OnClick()
+		{
+			if (currentSelectionState == SelectionState.Selected) {	return;}
+
+			OnSelectMap?.Invoke(mapId);
+
+			GetComponentInChildren<DifficultyContainer>().OnMapSelect(mapId);
+			GetComponentInChildren<Text>().color = Color.white;
+
+			Select();
+		}
+
+		private void OnSelectionChange(BaseEventData eventData)
+		{
+			if (eventData.selectedObject != gameObject && eventData.selectedObject.GetComponentInParent<MapButton>() == this) {
+				Select();
+				return;
 			}
 
+			OnDeselectMap?.Invoke(mapId);
+
+			GetComponentInChildren<DifficultyContainer>().OnMapDeselect(mapId);
+			GetComponentInChildren<Text>().color = Color.black;
 		}
 
 		protected override void OnValidate()
 		{
 			ButtonText = "_PlaceOlder";
 			base.OnValidate();
-		}
-
-		private void Button_OnClick()
-		{
-			GetComponentInParent<MapButtonContainer>().SetScaleY(SELECTED);
-		}
-
-		public override void OnDeselect(BaseEventData eventData)
-		{
-			base.OnDeselect(eventData);
-			GetComponentInParent<MapButtonContainer>().SetScaleY(NOT_SELECTED);
 		}
 	}
 }

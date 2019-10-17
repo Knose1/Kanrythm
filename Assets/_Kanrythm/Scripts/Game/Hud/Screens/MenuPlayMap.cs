@@ -15,6 +15,9 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 		[SerializeField] private Button buttonPlay;
 		[SerializeField] private Button buttonPlayInAutoplayMode;
 
+		[NonSerialized] public uint mapId = 0;
+		[NonSerialized] public uint diffId = 0;
+
 		public override void OnAddedToHudContainer(HudContainer hudContainer)
 		{
 			base.OnAddedToHudContainer(hudContainer);
@@ -32,12 +35,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 
 		private void Button_OnClick_Play()
 		{
-			GameManager.Instance.StartMap();
+			GameManager.Instance.StartMap(mapId, diffId);
 		}
 
 		private void Button_OnClick_Autoplay()
 		{
-			GameManager.Instance.StartMap(autoClear:true);
+			GameManager.Instance.StartMap(mapId, diffId, true);
 		}
 	}
 }

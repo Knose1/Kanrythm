@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 			get => buttonText;
 			set
 			{
+				buttonText = value;
+
 				if (!buttonTextComponent) buttonTextComponent = GetComponentInChildren<Text>();
 				buttonTextComponent.text = buttonText;
 			}
@@ -21,7 +24,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 		override protected void Awake()
 		{
 			base.Start();
-			
+
+			onClick.AddListener(Button_OnClick);
+		}
+
+		private void Button_OnClick()
+		{
 		}
 	}
 }
