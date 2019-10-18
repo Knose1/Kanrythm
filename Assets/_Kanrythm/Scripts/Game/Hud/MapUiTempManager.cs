@@ -33,10 +33,16 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 
 				lButtonContainer.MapButton.mapId = i;
 				lButtonContainer.OnSelectedMapAndDifficulty += LButtonContainer_OnSelectedMapAndDifficulty;
-				lButtonContainer.OnSelectMap += LButtonContainer_OnSelectMap; ;
+				lButtonContainer.OnSelectMap += LButtonContainer_OnSelectMap;
 
 				mapContainers.Add(lButtonContainer);
 			}
+		}
+
+		private void OnDestroy()
+		{
+			OnSelectedMapAndDifficulty = null;
+			currentSelectedMap = null;
 		}
 
 		private void LButtonContainer_OnSelectMap(MapButtonContainer obj)
