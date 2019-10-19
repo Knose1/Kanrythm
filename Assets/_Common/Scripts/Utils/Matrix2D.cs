@@ -6,14 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Com.Github.Knose1.Common.Utils {
+namespace Com.Github.Knose1.Common.Utils
+{
 	/// <summary>
 	/// 
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	class Matrix2D<T>
 	{
-		public bool autoUpdateHeight = true;
+		public bool autoUpdateWidth = true;
 
 		private List<List<T>> grid = new List<List<T>>();
 
@@ -22,10 +23,21 @@ namespace Com.Github.Knose1.Common.Utils {
 		/// </summary>
 		public List<List<T>> Grid { get => grid; }
 
-		public Matrix2D() {}
+		public Matrix2D() { }
 
 
 		#region Line
+		/// <summary>
+		/// Add a multiple lines
+		/// </summary>
+		public void AddLines(List<List<T>> lines, bool cropLists)
+		{
+			for (int i = lines.Count - 1; i >= 0; i--)
+			{
+				CreateLine(lines[i], cropLists);
+			}
+		}
+
 		/// <summary>
 		/// Create and add a new line
 		/// </summary>
@@ -39,8 +51,10 @@ namespace Com.Github.Knose1.Common.Utils {
 		/// Add a new line
 		/// </summary>
 		/// <returns>The pushed line</returns>
-		public List<T> CreateLine(List<T> line)
+		public List<T> CreateLine(List<T> line, bool cropList = true)
 		{
+			if (!cropList && line.Count > Width) Width = line.Count;
+
 			grid.Add(line);
 			UpdateLineLength(line);
 
@@ -52,7 +66,7 @@ namespace Com.Github.Knose1.Common.Utils {
 		/// </summary>
 		public void RemoveLine()
 		{
-			RemoveLine(Width - 1);
+			RemoveLine(Height - 1);
 		}
 
 		/// <summary>
@@ -65,6 +79,16 @@ namespace Com.Github.Knose1.Common.Utils {
 		#endregion Line
 
 		#region Column
+		/// <summary>
+		/// Add a multiple columns
+		/// </summary>
+		public void AddColumns(List<List<T>> columns)
+		{
+			for (int i = columns.Count - 1; i >= 0; i--)
+			{
+				CreateColumn(columns[i]);
+			}
+		}
 		/// <summary>
 		/// Create and add a new column
 		/// </summary>
@@ -89,7 +113,7 @@ namespace Com.Github.Knose1.Common.Utils {
 				grid[i].Add(column[i]);
 			}
 
-			height += 1;
+			width += 1;
 		}
 
 		/// <summary>
@@ -97,7 +121,7 @@ namespace Com.Github.Knose1.Common.Utils {
 		/// </summary>
 		public void RemoveColumn()
 		{
-			RemoveColumn(height - 1);
+			RemoveColumn(width - 1);
 		}
 
 		/// <summary>
@@ -110,16 +134,17 @@ namespace Com.Github.Knose1.Common.Utils {
 				grid[i].RemoveAt(index);
 			}
 
-			height -= 1;
+			width -= 1;
 		}
 		#endregion Column
 
 		#region Height / Width
-		public int Width {
+		public int Height
+		{
 			get => grid.Count;
 			set
 			{
-				int lWidth = Width;
+				int lWidth = Height;
 
 				if (value == lWidth) return;
 				if (value < lWidth)
@@ -135,20 +160,22 @@ namespace Com.Github.Knose1.Common.Utils {
 			}
 		}
 
-		private int height = 0;
-		public int Height
+		private int width = 0;
+		public int Width
 		{
-			get {
-				if (autoUpdateHeight) UpdateHeight();
-				return height;
+			get
+			{
+				if (autoUpdateWidth) UpdateHeight();
+				return width;
 			}
-			set {
-				height = value;
+			set
+			{
+				width = value;
 
 				for (int i = grid.Count - 1; i >= 0; i--)
 				{
 					UpdateLineLength(grid[i]);
-				}				
+				}
 			}
 		}
 
@@ -165,7 +192,7 @@ namespace Com.Github.Knose1.Common.Utils {
 				{
 					CreateLine();
 				}
-				if (y >= Height) Height = y + 1;
+				if (y >= Width) Width = y + 1;
 
 				grid[x][y] = value;
 
@@ -187,7 +214,7 @@ namespace Com.Github.Knose1.Common.Utils {
 		#endregion Matrix accessor
 
 		/// <summary>
-		/// Fill with default(T) or remove a line's item depending on the height.<br/>
+		/// Fill with default(T) or remove a line's item depending on the width.<br/>
 		/// <br/>
 		/// If there are too much items, the line will lose items.<br/>
 		/// If there aren't enough items, it will be filled with default(T).<br/>
@@ -195,13 +222,13 @@ namespace Com.Github.Knose1.Common.Utils {
 		/// <param name="line"></param>
 		private void UpdateLineLength(List<T> line)
 		{
-			if (line.Count > height)
+			if (line.Count > width)
 			{
-				line.RemoveRange(height, line.Count - height);
+				line.RemoveRange(width, line.Count - width);
 				return;
 			}
 
-			while (line.Count < height)
+			while (line.Count < width)
 			{
 				line.Add(default);
 			}
@@ -212,13 +239,13 @@ namespace Com.Github.Knose1.Common.Utils {
 		{
 			int lMaxHeight = 0;
 			List<T> lLine;
-			for (int i = Width - 1; i >= 0; i--)
+			for (int i = Height - 1; i >= 0; i--)
 			{
 				lLine = grid[i];
 				if (lLine.Count > lMaxHeight) lMaxHeight = lLine.Count;
 			}
 
-			Height = lMaxHeight;
+			Width = lMaxHeight;
 		}
 
 		#region Equals / ToString / operator List<List<T>>
@@ -256,11 +283,11 @@ namespace Com.Github.Knose1.Common.Utils {
 			return !matrix1.Equals(matrix2);
 		}
 
-		public static explicit operator List<List<T>>(Matrix2D<T> matrix)
+		public static implicit operator List<List<T>>(Matrix2D<T> matrix)
 		{
 			return matrix.grid;
 		}
-		
+
 		public override string ToString()
 		{
 			List<T> lInnerGridMe;
@@ -274,7 +301,7 @@ namespace Com.Github.Knose1.Common.Utils {
 
 				lToReturn += "[";
 
-				for (int j = 0 ; j < Height; j++)
+				for (int j = 0; j < Width; j++)
 				{
 					lToReturn += lInnerGridMe[j].ToString() + ",";
 				}
@@ -284,19 +311,18 @@ namespace Com.Github.Knose1.Common.Utils {
 
 			return lToReturn;
 		}
-		#endregion Equals / ToString / operator List<List<T>>
 
-		//Auto generated by Visual Studio
 		public override int GetHashCode()
 		{
 			var hashCode = -1084719171;
-			hashCode = hashCode * -1521134295 + autoUpdateHeight.GetHashCode();
+			hashCode = hashCode * -1521134295 + autoUpdateWidth.GetHashCode();
 			hashCode = hashCode * -1521134295 + EqualityComparer<List<List<T>>>.Default.GetHashCode(grid);
 			hashCode = hashCode * -1521134295 + EqualityComparer<List<List<T>>>.Default.GetHashCode(Grid);
-			hashCode = hashCode * -1521134295 + Width.GetHashCode();
-			hashCode = hashCode * -1521134295 + height.GetHashCode();
 			hashCode = hashCode * -1521134295 + Height.GetHashCode();
+			hashCode = hashCode * -1521134295 + width.GetHashCode();
+			hashCode = hashCode * -1521134295 + Width.GetHashCode();
 			return hashCode;
 		}
+		#endregion Equals / ToString / operator List<List<T>>
 	}
 }
