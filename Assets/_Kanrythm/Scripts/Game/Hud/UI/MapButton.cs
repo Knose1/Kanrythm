@@ -17,7 +17,6 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 	/// </summary>
 	class MapButton : MainMenuButton
 	{
-		private List<Difficulty> difficulties = new List<Difficulty>();
 		[NonSerialized] public int mapId = -1;
 		private Map map;
 
