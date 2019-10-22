@@ -1,3 +1,4 @@
+using Com.Github.Knose1.Common.Scrolling;
 using Com.Github.Knose1.Kanrythm.Data;
 using System;
 using System.Collections.Generic;
@@ -5,7 +6,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
-	public class DifficultyContainer : MonoBehaviour {
+
+	[RequireComponent(typeof(ScrollingBehaviour))]
+	public class DifficultyContainer : MonoBehaviour
+	{
 
 		[SerializeField] private DifficultyButton difficultyButtonPrefab;
 		[SerializeField] private Gradient difficultyColors;
@@ -18,6 +22,13 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 
 		private List<DifficultyButton> difficultyButtons = new List<DifficultyButton>();
 		private bool isMapSelected;
+
+		private ScrollingBehaviour scrollingBehaviour;
+
+		private void Awake()
+		{
+			scrollingBehaviour = GetComponent<ScrollingBehaviour>();
+		}
 
 		public void GenerateDifficultyButtons(Map map)
 		{
@@ -69,20 +80,8 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 		{
 			if (!isMapSelected) return;
 
-			float inputHorizontal = Input.GetAxis("Horizontal");
-
-			Vector3 lPos = transform.localPosition;
-			lPos.x += inputHorizontal * 4;
-
-			float minX = -(difficultyButtons.Count - rightDifficultyButtonSpacing) * (((RectTransform)difficultyButtonPrefab.transform).sizeDelta.x - spacing);
-			float maxX = 0;
-
-			if (minX > maxX) minX = maxX;
-
-			lPos.x = Mathf.Clamp(lPos.x, minX, maxX);
-
-			transform.localPosition = lPos;
-
+			scrollingBehaviour.minX = -(difficultyButtons.Count - rightDifficultyButtonSpacing) * (((RectTransform)difficultyButtonPrefab.transform).sizeDelta.x - spacing);
+			scrollingBehaviour.doScrollHorizontal();
 		}
 
 		protected void OnDestroy()

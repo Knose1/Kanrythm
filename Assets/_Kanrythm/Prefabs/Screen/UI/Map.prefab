@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 5767594837428943053}
   - component: {fileID: 5767594837428943052}
   - component: {fileID: 614988545779978024}
+  - component: {fileID: 1901174185109767498}
   m_Layer: 5
   m_Name: DifficultyContainer
   m_TagString: Untagged
@@ -490,6 +491,23 @@ MonoBehaviour:
   isInverted: 1
   spacing: 125
   rightDifficultyButtonSpacing: 3.9
+--- !u!114 &1901174185109767498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5767594837428943058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47039a6c65613fc40b36da1b4a4d60f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 4
+  minX: 0
+  maxX: 0
+  horizontalAxis: Horizontal
+  verticalAxis: Vertical
 --- !u!1 &5767594837678321232
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 1937953216}
   - component: {fileID: 1937953218}
   - component: {fileID: 4068033846976826956}
+  - component: {fileID: 1064305816}
   m_Layer: 5
   m_Name: MapContainer
   m_TagString: Untagged
@@ -141,6 +142,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapButtonContainerTemplate: {fileID: 5767594836133160822, guid: 36d82c4e25176674abbb23ace1aabc00,
     type: 3}
+--- !u!114 &1064305816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937953215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47039a6c65613fc40b36da1b4a4d60f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 4
+  minX: 0
+  maxX: 0
+  minY: 0
+  maxY: 0
+  horizontalAxis: Horizontal
+  verticalAxis: Vertical
 --- !u!1 &8306468786713510426
 GameObject:
   m_ObjectHideFlags: 0
