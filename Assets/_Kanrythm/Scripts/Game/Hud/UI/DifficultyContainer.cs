@@ -46,7 +46,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 
 				float lLerp = isInverted ? 1 - Mathf.InverseLerp(0, diffCount, i) : Mathf.InverseLerp(0, diffCount, i);
 
-				lButton.GetComponent<Image>().color = difficultyColors.Evaluate(lLerp);
+				lButton.targetGraphic.color = difficultyColors.Evaluate(lLerp);
 				lButton.GetComponentInChildren<Text>().color = difficultyTextColors.Evaluate(lLerp);
 
 				lButton.OnSelectedDifficulty += LButton_OnSelectedDifficulty;
