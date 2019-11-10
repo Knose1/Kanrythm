@@ -14,6 +14,9 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 	{
 		[SerializeField] private MapUiTempManager mapUiTempManager;
 
+		private void Update()
+		{
+		}
 
 		public override void OnAddedToHudContainer(HudContainer hudContainer)
 		{
@@ -30,6 +33,8 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 
 		private void MapButtonContainer_OnSelectedMapAndDifficulty(int mapId, int diffId)
 		{
+			Debug.Log("Starting " + mapId + ":" + diffId);
+
 			MenuPlayMap lScreen = HudManager.Instance.GetTemplateMenuPlayMap();
 
 			lScreen.mapId = (uint)mapId;

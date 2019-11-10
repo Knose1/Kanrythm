@@ -55,3 +55,5 @@ run.bat
 
 #Documentation
 [Dd]ocumentation/*
+
+Assets/_Kanrythm/Controller/*.cs

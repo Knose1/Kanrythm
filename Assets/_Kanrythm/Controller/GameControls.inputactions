@@ -1,0 +1,109 @@
+{
+    "name": "GameControls",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "916b1fb6-cf45-4b7c-84cb-b7863eac888f",
+            "actions": [
+                {
+                    "name": "Cannon1",
+                    "type": "Value",
+                    "id": "80b530f3-9685-4cd9-b85d-254834ec9953",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Cannon2",
+                    "type": "Button",
+                    "id": "11ed41bd-8556-4780-a799-96fba1fc4d52",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LockCannon",
+                    "type": "Button",
+                    "id": "bec8d74c-70af-47e2-bc40-d8f6e8dbb7c1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4ab4cc38-077b-4588-aca5-1d33092d8665",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cannon1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2c82abc-974b-4b11-af9e-e66b2d4984ad",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cannon2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7a5ee28-c68b-48a9-be7d-afe279e888f0",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockCannon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Hud",
+            "id": "ddbddc24-62a2-48ce-aa8f-2413cf543004",
+            "actions": [
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "43e9f81c-fda3-4bac-a7b3-b154815ae1c9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "043c8d1d-1be9-4a6b-9af1-30dfd4a8e76b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "529941e5-41fd-46ad-a3c4-900727dd28c8",
+                    "path": "<Mouse>/backButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
