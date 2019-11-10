@@ -1,7 +1,6 @@
 using Com.Github.Knose1.Kanrythm.Game.Hud.Screens;
 using Com.Github.Knose1.Kanrythm.Game;
 using Com.Github.Knose1.Kanrythm.Game.Hud;
-using Com.Github.Knose1.Kanrythm.Game.Hud.Screens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Com.Github.Knose1.Kanrythm.Game
-{
+namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 	class HudManager : MonoBehaviour
 	{
 		private static HudManager instance;
