@@ -28,10 +28,12 @@ namespace Com.Github.Knose1.Kanrythm.Game
 
 		public float Volume { get => audioSource.volume; set => audioSource.volume = value; }
 
+		#if UNITY_EDITOR
 		void OnValidate()
 		{
 			playingSpeed = Mathf.Max(Mathf.Round(playingSpeed / 0.25f) * 0.25f, 0.01f);
 		}
+		#endif
 
 		private void Awake()
 		{	
