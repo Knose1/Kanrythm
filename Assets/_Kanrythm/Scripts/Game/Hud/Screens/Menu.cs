@@ -1,4 +1,7 @@
+using Com.Github.Knose1.Common;
+using Com.Github.Knose1.Kanrythm.Game;
 using Com.Github.Knose1.Kanrythm.Game.Hud;
+using Com.Github.Knose1.Kanrythm.Game.Hud.Screens;
 using Com.Github.Knose1.Kanrythm.Loader;
 using System;
 using System.Collections.Generic;
@@ -6,29 +9,85 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 {
-	class Menu : Screen
+	[RequireComponent(typeof(Animator))]
+	public class Menu : Screen
 	{
-		[SerializeField] private Button buttonPlay;
-		[SerializeField] private Button buttonPlayInAutoplayMode;
+		[SerializeField] private MapUiTempManager mapUiTempManager;
 
-		private void Awake()
+		[Header("Animation Trigger")]
+		[SerializeField] private string playTrigger = "Play";
+		[SerializeField] private string returnToMenuTrigger = "ReturnToMenu";
+
+		private bool isOnTheLeftDock = true;
+
+		private Animator animator;
+
+		#region HudContainer Down events
+		public override void OnAddedToHudContainer(HudContainer hudContainer)
 		{
-			buttonPlay				.onClick.AddListener(Button_OnClick_Play);
-			buttonPlayInAutoplayMode.onClick.AddListener(Button_OnClick_Autoplay);
+			animator = GetComponent<Animator>();
+
+			base.OnAddedToHudContainer(hudContainer);
+			mapUiTempManager.OnSelectedMapAndDifficulty += MapButtonContainer_OnSelectedMapAndDifficulty;
+
+			Debug.Log("Added to hud");
+			Controller.Instance.Input.Hud.Exit.performed += Exit_performed;
 		}
 
-		private void Button_OnClick_Play()
+		public override void OnRemovedFromHudContainer(HudContainer hudContainer)
 		{
-			GameManager.Instance.StartMap();
+			base.OnRemovedFromHudContainer(hudContainer);
+			mapUiTempManager.OnSelectedMapAndDifficulty -= MapButtonContainer_OnSelectedMapAndDifficulty;
+
+			Debug.Log("Removed from hud");
+			Controller.Instance.Input.Hud.Exit.performed -= Exit_performed;
+		}
+		#endregion
+
+		public void OnButtonPlay()
+		{
+			animator.SetTrigger(playTrigger);
+
+			isOnTheLeftDock = false;
 		}
 
-		private void Button_OnClick_Autoplay()
+		public void OnQuitButton()
 		{
-			GameManager.Instance.StartMap(autoClear:true);
+			//TODO : Add a Quit screen
+			Application.Quit();
 		}
+
+		public void OnOpenMapFolder()
+		{
+			MapLoader.OpenMapFolder();
+		}
+
+		private void Exit_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+		{
+			if (!isOnTheLeftDock)
+			{
+				isOnTheLeftDock = true;
+				animator.SetTrigger(returnToMenuTrigger);
+			}
+			else {
+				OnQuitButton();
+			}
+		}
+
+		private void MapButtonContainer_OnSelectedMapAndDifficulty(int mapId, int diffId)
+		{
+			Debug.Log("Starting " + mapId + ":" + diffId);
+
+			MenuPlayMap lScreen = HudManager.Instance.GetTemplateMenuPlayMap();
+
+			lScreen.mapId = (uint)mapId;
+			lScreen.diffId = (uint)diffId;
+
+			HudContainer.SetScreen(lScreen);
+		}
+
 	}
 }

@@ -37,7 +37,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud
 			}
 
 			currentScreen = screen;
-			currentScreen.transform.parent = transform;
+			currentScreen.transform.SetParent(transform);
 			currentScreen.OnAddedToHudContainer(this);
 		}
 

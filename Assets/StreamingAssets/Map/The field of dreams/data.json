@@ -2,7 +2,7 @@
 	"name"			: "The field of dreams",
 	"audio"			: "level.ogg",
 	"author"		: "Someone",
-	"difficulties"	: ["Easy"],
+	"difficulties"	: ["Easy", "Normal"],
 	"timing" : {
 		"bpm":144,
 		"offset":0,

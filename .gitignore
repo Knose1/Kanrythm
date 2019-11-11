@@ -52,3 +52,8 @@ FMOD/**.unsaved
 FMOD/**.cache
 FMOD/**.restore
 run.bat
+
+#Documentation
+[Dd]ocumentation/*
+
+Assets/_Kanrythm/Controller/*.cs

@@ -10,8 +10,9 @@ using Com.Github.Knose1.Kanrythm.Game.PlayerType;
 using Com.Github.Knose1.Kanrythm.Game.BeatObject;
 
 namespace Com.Github.Knose1.Kanrythm.Game {
+
 	/// <summary>
-	/// Classe général du jeu : Elle s'occupe d'activer les différents états du jeu (load des map / ingame / menu)
+	///	%Game manager, it loads the map, the song and creates the beats
 	/// </summary>
 	public class GameManager : StateMachine
 	{
@@ -28,21 +29,19 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		#endregion
 
 		/// <summary>
-		/// The global offset (in seconds) all maps.									<br/>
+		/// The global offset (in seconds).												<br/>
 		/// When playing, the player must have a little time to check the controles.	<br/>
-		/// This is also used not to surprise the player.								<br/>
+		/// This is used not to surprise the player.									<br/>
 		/// </summary>
 		private const float GLOBAL_MAP_OFFSET_BEFORE_START_MAP = 1;
 
 		/// <summary>
-		/// The global offset (in seconds) all maps.									<br/>
-		/// When playing, the player must have a little time to check the controles.	<br/>
-		/// This is also used not to surprise the player.								<br/>
+		/// The fadeout time of the maps
 		/// </summary>
 		private const float GLOBAL_MAP_OFFSET_BFORE_END_MAP = 5;
 
 		/// <summary>
-		/// Is autoClear is enabled, the beats will automatiquely be destroyed at the end of his move
+		/// If autoClear is enabled, the beats will automatiquely be destroyed when hiting the player's white outerborder (100% accuracy)
 		/// </summary>
 		public bool autoClear = false;
 
@@ -83,6 +82,8 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 
 		private void OnDestroy()
 		{
+			Controller.Instance?.Input.Gameplay.Disable();
+
 			OnEnd?.Invoke();
 			Destroy(player);
 			Destroy(gameContainer);
@@ -91,16 +92,25 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			instance = null;
 		}
 
-		public void StartMap(uint currentMap = 0, uint difficulty = 0, bool autoClear = false)
+		/// <summary>
+		/// Start a map
+		/// </summary>
+		/// <param name="mapId">The map id</param>
+		/// <param name="difficultyId">The id of the difficulty</param>
+		/// <param name="autoClear">Whenever to destroy or not then beats when hiting the player's white outerborder (100% accuracy)</param>
+		public void StartMap(uint mapId = 0, uint difficultyId = 0, bool autoClear = false)
 		{
 			this.autoClear = autoClear;
-			LoadAndStartGame(MapLoader.Maplist[0], 0);
+			LoadAndStartGame(MapLoader.Maplist[(int)mapId], difficultyId);
 
 			gameContainer = new GameObject("GameContainer");
 			blackOverlay = Instantiate(GameRootAndObjectLibrary.Instance.BlackBackground);
 			blackOverlay.enabled = false;
 
 			player = Instantiate(GameRootAndObjectLibrary.Instance.PlayerPrefab, gameContainer.transform);
+
+			player.EnablePlay();
+			Controller.Instance.Input.Gameplay.Enable();
 		}
 
 		private void LoadAndStartGame(Map map, uint difficultyIndex)
@@ -126,14 +136,13 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			musicLoaderEnumerator = null;
 			musicLoader = null;
 
-			player.EnablePlay();
-
 			//Permet d'attendre 1 frame avant le lancement de la musique
 			doAction = DoActionStartGame;
 		}
 
 		private void DoActionStartGame()
 		{
+
 			musicPlayer.musicOffset = currentDiff.ApproachRate;
 
 			if (map.timing.offset >= 0)
@@ -168,7 +177,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		#endregion doAction
 		
 		/// <summary>
-		/// Fonction dans laquelle est créé les notes
+		/// Function in witch beats are instantied
 		/// </summary>
 		/// <param name="timeSplit"></param>
 		private void LevelLoop(float timeSplit)
@@ -208,17 +217,17 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		}
 
 		#region CreateBeat
-		private void CreateBeat(float rotation, float rotation2)
+		protected void CreateBeat(float rotation, float rotation2)
 		{
 			CreateBeat(rotation);
 			CreateBeat(rotation2);
 		}
-		private void CreateBeat(float rotation)
+		protected void CreateBeat(float rotation)
 		{
 
 			if (float.IsNaN(rotation)) return;
 
-			Debug.Log(rotation + "/" + float.IsNaN(rotation));
+			//Debug.Log(rotation + "/" + float.IsNaN(rotation));
 
 			Beat lBeat = Instantiate(GameRootAndObjectLibrary.Instance.BeatPrefab, gameContainer.transform);
 
