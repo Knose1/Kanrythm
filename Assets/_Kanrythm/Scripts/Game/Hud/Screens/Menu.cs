@@ -33,7 +33,6 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 			base.OnAddedToHudContainer(hudContainer);
 			mapUiTempManager.OnSelectedMapAndDifficulty += MapButtonContainer_OnSelectedMapAndDifficulty;
 
-			Debug.Log("Added to hud");
 			Controller.Instance.Input.Hud.Exit.performed += Exit_performed;
 		}
 
@@ -42,7 +41,6 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 			base.OnRemovedFromHudContainer(hudContainer);
 			mapUiTempManager.OnSelectedMapAndDifficulty -= MapButtonContainer_OnSelectedMapAndDifficulty;
 
-			Debug.Log("Removed from hud");
 			Controller.Instance.Input.Hud.Exit.performed -= Exit_performed;
 		}
 		#endregion
