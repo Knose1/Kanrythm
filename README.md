@@ -1,7 +1,7 @@
 ## Kanrythm
 Kanrythm is a rythm'N game based on cannons published under CC-BY-NC-ND license
 
-[Download link (dev 0.3.0)](https://github.com/Knose1/Kanrythm/releases/download/v0.3.0-dev/Dev.0.3.0.zip)
+[Download link (dev 0.4.0)](https://github.com/Knose1/Kanrythm/releases/download/v0.4.0-dev/Dev.0.4.0.zip)
 
 ## Comunity
 The comunity repository can be found at :
