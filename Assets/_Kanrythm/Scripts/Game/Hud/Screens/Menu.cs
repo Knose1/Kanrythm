@@ -2,6 +2,7 @@ using Com.Github.Knose1.Common;
 using Com.Github.Knose1.Kanrythm.Game;
 using Com.Github.Knose1.Kanrythm.Game.Hud;
 using Com.Github.Knose1.Kanrythm.Game.Hud.Screens;
+using Com.Github.Knose1.Kanrythm.Loader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,11 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 		{
 			//TODO : Add a Quit screen
 			Application.Quit();
+		}
+
+		public void OnOpenMapFolder()
+		{
+			MapLoader.OpenMapFolder();
 		}
 
 		private void Exit_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

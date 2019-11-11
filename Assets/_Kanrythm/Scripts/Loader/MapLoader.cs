@@ -1,5 +1,4 @@
 using Com.Github.Knose1.Common;
-using Com.Github.Knose1.Common.File;
 using Com.Github.Knose1.Kanrythm.Data;
 using System;
 using System.Collections.Generic;
@@ -81,6 +80,11 @@ namespace Com.Github.Knose1.Kanrythm.Loader {
 			}
 
 
+		}
+
+		public static void OpenMapFolder()
+		{
+			Application.OpenURL(mapFolder.FullName);
 		}
 	}
 }
