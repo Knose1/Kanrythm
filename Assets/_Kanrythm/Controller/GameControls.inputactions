@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "Cannon1",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "80b530f3-9685-4cd9-b85d-254834ec9953",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -25,9 +25,9 @@
                     "name": "LockCannon",
                     "type": "Button",
                     "id": "bec8d74c-70af-47e2-bc40-d8f6e8dbb7c1",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=1)"
                 }
             ],
             "bindings": [
@@ -37,7 +37,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse and Keyboard",
                     "action": "Cannon1",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -48,7 +48,7 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse and Keyboard",
                     "action": "Cannon2",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -59,7 +59,7 @@
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse and Keyboard",
                     "action": "LockCannon",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -76,7 +76,7 @@
                     "id": "43e9f81c-fda3-4bac-a7b3-b154815ae1c9",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -86,7 +86,7 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse and Keyboard",
                     "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -97,7 +97,7 @@
                     "path": "<Mouse>/backButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Mouse and Keyboard",
                     "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -105,5 +105,22 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Mouse and Keyboard",
+            "bindingGroup": "Mouse and Keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

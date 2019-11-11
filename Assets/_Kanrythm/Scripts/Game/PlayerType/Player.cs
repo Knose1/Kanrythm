@@ -27,15 +27,26 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 		{
 			Debug.Log("play enabled");
 			doAction = DoActionNormal;
-		}
 
+			GameplayActions control = Controller.Instance.Input.Gameplay;
+
+			control.LockCannon.performed += LockCannon_performed;
+
+		}
 		Vector3 vecBeforeCannonLock = Vector3.right;
 		float mouseVsCannonAngleDelta = 0;
 
-		private float alpha = 1;
+		private bool isLockCannonUp;
+
+		/*private float alpha = 1;
 		public float Alpha { get => alpha; set {
 				
 			}
+		}*/
+
+		private void LockCannon_performed(InputAction.CallbackContext obj)
+		{
+			isLockCannonUp = true;
 		}
 
 		override protected void DoActionNormal()
@@ -55,14 +66,15 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 
 			GameplayActions control = Controller.Instance.Input.Gameplay;
 
-			if (control.Cannon1.phase == InputActionPhase.Performed)
+			if (control.LockCannon.phase == InputActionPhase.Started)
 			{
 				//cannon1Line.localRotation = cannon1Line.rotation;
 				cannon2NoLine.transform.rotation = Quaternion.Euler(0, 0, (float)Math.Atan2(-lVec.y, -lVec.x) * Mathf.Rad2Deg);
 			}
-			else if (control.Cannon1.phase == InputActionPhase.Canceled)
+			else if (isLockCannonUp)
 			{
-				mouseVsCannonAngleDelta += Vector3.SignedAngle( vecBeforeCannonLock, lVec, Vector3.back);
+				mouseVsCannonAngleDelta += Vector3.SignedAngle(vecBeforeCannonLock, lVec, Vector3.back);
+				isLockCannonUp = false;
 			}
 			else
 			{
@@ -70,14 +82,19 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 				transform.rotation = Quaternion.Euler(0, 0, mouseVsCannonAngleDelta + (float)Math.Atan2(lVec.y, lVec.x) * Mathf.Rad2Deg);
 			}
 
-			cannon1Line.IsTriggered   = control.Cannon1.phase == InputActionPhase.Performed;
-			cannon2NoLine.IsTriggered = control.Cannon2.phase == InputActionPhase.Performed;
+			cannon1Line.IsTriggered   = control.Cannon1.ReadValue<float>() != 0;
+			cannon2NoLine.IsTriggered = control.Cannon2.ReadValue<float>() != 0;
 
 		}
 
 		public float GetCannonRadius()
 		{
 			return canonTargetPosition.position.magnitude;
+		}
+
+		private void OnDestroy()
+		{
+			if (Controller.Instance) Controller.Instance.Input.Gameplay.LockCannon.performed -= LockCannon_performed;
 		}
 	}
 }

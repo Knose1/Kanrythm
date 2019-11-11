@@ -22,6 +22,8 @@ namespace Com.Github.Knose1.Common {
 		
 		private void OnDestroy(){
 			if (this == instance) instance = null;
+
+			input.Disable();
 		}
 	}
-}
+} 

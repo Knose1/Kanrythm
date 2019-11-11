@@ -82,6 +82,8 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 
 		private void OnDestroy()
 		{
+			Controller.Instance?.Input.Gameplay.Disable();
+
 			OnEnd?.Invoke();
 			Destroy(player);
 			Destroy(gameContainer);
@@ -106,6 +108,9 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			blackOverlay.enabled = false;
 
 			player = Instantiate(GameRootAndObjectLibrary.Instance.PlayerPrefab, gameContainer.transform);
+
+			player.EnablePlay();
+			Controller.Instance.Input.Gameplay.Enable();
 		}
 
 		private void LoadAndStartGame(Map map, uint difficultyIndex)
@@ -131,14 +136,13 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			musicLoaderEnumerator = null;
 			musicLoader = null;
 
-			player.EnablePlay();
-
 			//Permet d'attendre 1 frame avant le lancement de la musique
 			doAction = DoActionStartGame;
 		}
 
 		private void DoActionStartGame()
 		{
+
 			musicPlayer.musicOffset = currentDiff.ApproachRate;
 
 			if (map.timing.offset >= 0)
@@ -223,7 +227,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 
 			if (float.IsNaN(rotation)) return;
 
-			Debug.Log(rotation + "/" + float.IsNaN(rotation));
+			//Debug.Log(rotation + "/" + float.IsNaN(rotation));
 
 			Beat lBeat = Instantiate(GameRootAndObjectLibrary.Instance.BeatPrefab, gameContainer.transform);
 

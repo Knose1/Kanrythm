@@ -542,7 +542,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1089111314}
   - component: {fileID: 1089111315}
-  - component: {fileID: 1089111316}
   m_Layer: 0
   m_Name: HudManager
   m_TagString: Untagged
@@ -583,18 +582,6 @@ MonoBehaviour:
     type: 3}
   menuPlayMapTemplate: {fileID: 4597909072899739362, guid: dcd29e711e98d4240ac69565a6356014,
     type: 3}
---- !u!114 &1089111316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1089111313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32cfaff59c6fbcb4186ab46d671f8421, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1632026616
 GameObject:
   m_ObjectHideFlags: 0

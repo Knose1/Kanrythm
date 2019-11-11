@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using Com.Github.Knose1.Common;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 	class HudManager : MonoBehaviour
@@ -37,17 +38,20 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 			GameManager.OnStart += GameManager_OnStart;
 			GameManager.OnEnd += GameManager_OnEnd;
 
+			Controller.Instance.Input.Hud.Enable();
 			hudContainer.SetScreen(GetTemplateMapLoad());
 
 		}
 
 		private void GameManager_OnStart()
 		{
+			Controller.Instance.Input.Hud.Disable();
 			hudContainer.ClearScreen();
 		}
 
 		private void GameManager_OnEnd()
 		{
+			Controller.Instance?.Input.Hud.Enable();
 			hudContainer.SetScreen(GetTemplateMenu());
 		}
 	}
