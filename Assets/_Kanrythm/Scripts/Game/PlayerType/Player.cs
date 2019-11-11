@@ -2,6 +2,8 @@ using Com.Github.Knose1.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static GameControls;
 
 namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 	public class Player : StateMachine {
@@ -11,12 +13,9 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 
 		[Header("Cannon 1 (line)")]
 		[SerializeField] private CanonState cannon1Line;
-		[SerializeField] private string inputClickCannon1Line;
-		[SerializeField] private string inputLockCannon1Line;
 
 		[Header("Cannon 2 (no line)")]
 		[SerializeField] private CanonState cannon2NoLine;
-		[SerializeField] private string inputClickCannon2NoLine;
 
 		private SpriteRenderer[] childrenRenderer;
 		private List<float> childrenOriginalAlpha;
@@ -28,15 +27,26 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 		{
 			Debug.Log("play enabled");
 			doAction = DoActionNormal;
-		}
 
+			GameplayActions control = Controller.Instance.Input.Gameplay;
+
+			control.LockCannon.performed += LockCannon_performed;
+
+		}
 		Vector3 vecBeforeCannonLock = Vector3.right;
 		float mouseVsCannonAngleDelta = 0;
 
-		private float alpha = 1;
+		private bool isLockCannonUp;
+
+		/*private float alpha = 1;
 		public float Alpha { get => alpha; set {
 				
 			}
+		}*/
+
+		private void LockCannon_performed(InputAction.CallbackContext obj)
+		{
+			isLockCannonUp = true;
 		}
 
 		override protected void DoActionNormal()
@@ -54,15 +64,17 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 			Debug.DrawLine(Vector3.zero, lVec, new Color(1,0,0,1));
 			Debug.DrawLine(Vector3.zero, vecBeforeCannonLock, new Color(0,1,0,1));
 
+			GameplayActions control = Controller.Instance.Input.Gameplay;
 
-			if (Input.GetButton(inputLockCannon1Line))
+			if (control.LockCannon.phase == InputActionPhase.Started)
 			{
 				//cannon1Line.localRotation = cannon1Line.rotation;
 				cannon2NoLine.transform.rotation = Quaternion.Euler(0, 0, (float)Math.Atan2(-lVec.y, -lVec.x) * Mathf.Rad2Deg);
 			}
-			else if (Input.GetButtonUp(inputLockCannon1Line))
+			else if (isLockCannonUp)
 			{
-				mouseVsCannonAngleDelta += Vector3.SignedAngle( vecBeforeCannonLock, lVec, Vector3.back);
+				mouseVsCannonAngleDelta += Vector3.SignedAngle(vecBeforeCannonLock, lVec, Vector3.back);
+				isLockCannonUp = false;
 			}
 			else
 			{
@@ -70,14 +82,19 @@ namespace Com.Github.Knose1.Kanrythm.Game.PlayerType {
 				transform.rotation = Quaternion.Euler(0, 0, mouseVsCannonAngleDelta + (float)Math.Atan2(lVec.y, lVec.x) * Mathf.Rad2Deg);
 			}
 
-			cannon1Line.IsTriggered   = Input.GetButton(inputClickCannon1Line  );
-			cannon2NoLine.IsTriggered = Input.GetButton(inputClickCannon2NoLine);
+			cannon1Line.IsTriggered   = control.Cannon1.ReadValue<float>() != 0;
+			cannon2NoLine.IsTriggered = control.Cannon2.ReadValue<float>() != 0;
 
 		}
 
 		public float GetCannonRadius()
 		{
 			return canonTargetPosition.position.magnitude;
+		}
+
+		private void OnDestroy()
+		{
+			if (Controller.Instance) Controller.Instance.Input.Gameplay.LockCannon.performed -= LockCannon_performed;
 		}
 	}
 }

@@ -12,12 +12,36 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 		public const string MAIN_JSON = "data.json";
 		public const string MAP_EXTENTION = ".map";
 
+		/// <summary>
+		/// The path to the map directory
+		/// </summary>
 		public string directoryPath;
+
+		/// <summary>
+		/// The name of the map
+		/// </summary>
 		public string name;
+
+		/// <summary>
+		/// The relative path to the audio file
+		/// </summary>
 		public string audio;
+
+		/// <summary>
+		/// The name of the difficulties (it's also the name of the files.dat)
+		/// </summary>
 		public List<string> difficulties;
+
+		/// <summary>
+		/// The timing infos of the map
+		/// </summary>
 		public MapTimingData timing;
+
+		/// <summary>
+		/// Type of the audio
+		/// </summary>
 		private AudioType audioType;
+		internal string background;
 
 		private Map() { }
 
@@ -47,7 +71,25 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 
 		public Difficulty GetDifficulty(uint id)
 		{
-			return Difficulty.GetDifficulty(directoryPath + "/" + difficulties[(int)id] + MAP_EXTENTION);
+			return GetDifficulty((int)id);
+		}
+		public Difficulty GetDifficulty(int id)
+		{
+			return Difficulty.GetDifficulty(directoryPath + "/" + difficulties[id] + MAP_EXTENTION);
+		}
+
+		public List<Difficulty> GetDifficulties()
+		{
+			List<Difficulty> lToReturn = new List<Difficulty>();
+
+			int lLength = difficulties.Count;
+
+			for (int i = 0; i < lLength; i++)
+			{
+				lToReturn.Add(GetDifficulty(i));
+			}
+
+			return lToReturn;
 		}
 
 		public AudioClipGetter GetSong()

@@ -8,4 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Kanrythm/Scenes/Main.unity
     guid: bf7104f9392af6d4cac433e6add0c01e
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: db768e27200b8ff46abf2eca078ea14a,
+      type: 2}

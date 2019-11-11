@@ -1,4 +1,5 @@
 ﻿using Com.Github.Knose1.Kanrythm.Game.BeatObject;
+using Com.Github.Knose1.Kanrythm.Game.Hud.UI;
 using Com.Github.Knose1.Kanrythm.Game.PlayerType;
 using System;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Com.Github.Knose1.Kanrythm
 		public Transform ManagerContainer { get => managerContainer; }
 
 		[SerializeField] private Player playerPrefab;
-		public Player PlayerPrefab => playerPrefab;
+		public Player PlayerPrefab { get => playerPrefab; }
 
 		[SerializeField] private Beat beatPrefab;
 		public Beat BeatPrefab { get => beatPrefab; }
@@ -22,7 +23,7 @@ namespace Com.Github.Knose1.Kanrythm
 		public SpriteRenderer BlackBackground { get => blackBackground; }
 
 		/// <summary>
-		/// instance unique de la classe     
+		/// Unique instance of the classe     
 		/// </summary>
 		public static GameRootAndObjectLibrary Instance
 		{
