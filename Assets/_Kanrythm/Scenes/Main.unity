@@ -288,11 +288,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuPlayMap
       objectReference: {fileID: 0}
-    - target: {fileID: 4005009037405585834, guid: dcd29e711e98d4240ac69565a6356014,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4005009037405585835, guid: dcd29e711e98d4240ac69565a6356014,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -397,11 +392,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4005009039212149548, guid: dcd29e711e98d4240ac69565a6356014,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcd29e711e98d4240ac69565a6356014, type: 3}

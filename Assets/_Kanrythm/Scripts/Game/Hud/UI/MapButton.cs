@@ -85,10 +85,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 		/// </summary>
 		public override void OnDeselect(BaseEventData eventData) {}
 
+		#if UNITY_EDITOR
 		protected override void OnValidate()
 		{
 			ButtonText = "_PlaceOlder";
 			base.OnValidate();
 		}
+		#endif
 	}
 }
