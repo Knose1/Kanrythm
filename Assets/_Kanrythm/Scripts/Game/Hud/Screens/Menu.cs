@@ -53,13 +53,21 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 			isOnTheLeftDock = false;
 		}
 
+		public void OnQuitButton()
+		{
+			//TODO : Add a Quit screen
+			Application.Quit();
+		}
+
 		private void Exit_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
 		{
-			Debug.Log("hi");
 			if (!isOnTheLeftDock)
 			{
 				isOnTheLeftDock = true;
 				animator.SetTrigger(returnToMenuTrigger);
+			}
+			else {
+				OnQuitButton();
 			}
 		}
 
@@ -74,5 +82,6 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 
 			HudContainer.SetScreen(lScreen);
 		}
+
 	}
 }
