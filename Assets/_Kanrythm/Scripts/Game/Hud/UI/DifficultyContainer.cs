@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 
-	[RequireComponent(typeof(ScrollingBehaviour))]
+	[RequireComponent(typeof(VerticalScrollableLayoutGroup))]
 	public class DifficultyContainer : MonoBehaviour
 	{
 
@@ -23,11 +23,11 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 		private List<DifficultyButton> difficultyButtons = new List<DifficultyButton>();
 		private bool isMapSelected;
 
-		private ScrollingBehaviour scrollingBehaviour;
+		private VerticalScrollableLayoutGroup scrollingBehaviour;
 
 		private void Awake()
 		{
-			scrollingBehaviour = GetComponent<ScrollingBehaviour>();
+			scrollingBehaviour = GetComponent<VerticalScrollableLayoutGroup>();
 		}
 
 		public void GenerateDifficultyButtons(Map map)
@@ -80,13 +80,14 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 		{
 			if (!isMapSelected) return;
 
-			scrollingBehaviour.minX = -(difficultyButtons.Count - rightDifficultyButtonSpacing) * (((RectTransform)difficultyButtonPrefab.transform).sizeDelta.x - spacing);
-			scrollingBehaviour.doScrollHorizontal();
+			//scrollingBehaviour.minX = (difficultyButtons.Count - rightDifficultyButtonSpacing) * (((RectTransform)difficultyButtonPrefab.transform).sizeDelta.x - spacing);
+			scrollingBehaviour.DoScroll();
 		}
 
 		protected void OnDestroy()
 		{
 			OnSelectedDifficulty = null;
 		}
+		
 	}
 }
