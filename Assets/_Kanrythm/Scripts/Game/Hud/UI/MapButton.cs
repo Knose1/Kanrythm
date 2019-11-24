@@ -56,6 +56,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 
 		public void Focus()
 		{
+			OnSelectMap?.Invoke(mapId);
 
 			GetComponentInChildren<DifficultyContainer>().OnMapSelect(mapId);
 			GetComponentInChildren<Text>().color = Color.white;
@@ -75,9 +76,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 
 		private void Button_OnClick()
 		{
-			if (currentSelectionState == SelectionState.Selected) {	return;}
+			if (currentSelectionState == SelectionState.Selected) {
+				Unfocus();
+				return;
+			}
 
-			OnSelectMap?.Invoke(mapId);
+			Focus();
 		}
 
 		/// <summary>

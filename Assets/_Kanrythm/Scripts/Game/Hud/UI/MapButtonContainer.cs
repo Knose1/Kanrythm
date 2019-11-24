@@ -1,3 +1,4 @@
+using Com.Github.Knose1.Common.Scrolling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,11 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 
 		[SerializeField] private float notSelectedHeight = 193;
 		[SerializeField] private float selectedHeight = 300;
+		[SerializeField] private float notSelectedPriority = 1;
+		[SerializeField] private float selectedPriority = 2;
 
 
+		[SerializeField] private ScrollingLayoutElement scrollingLayoutElement;
 		[SerializeField] private RectTransform mask2;
 		[SerializeField] private Shadow mapButtonShadow;
 		[SerializeField] private MapButton mapButton;
@@ -41,6 +45,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 			mapButton.OnSelectedMapAndDifficulty += MapButton_OnSelectedMapAndDifficulty; ;
 
 			SetScaleY(notSelectedHeight);
+			scrollingLayoutElement.priority = notSelectedPriority;
 		}
 
 		private void MapButton_OnSelectedMapAndDifficulty(int mapId, int difficultyId)
@@ -73,11 +78,14 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 		private void MapButton_OnDeselectMap(int mapId)
 		{
 			SetScaleY(notSelectedHeight);
+			scrollingLayoutElement.priority = notSelectedPriority;
 		}
 
 		private void MapButton_OnSelectMap(int mapId)
 		{
 			SetScaleY(selectedHeight);
+			scrollingLayoutElement.priority = selectedPriority;
+
 			OnSelectMap?.Invoke(this);
 		}
 	}

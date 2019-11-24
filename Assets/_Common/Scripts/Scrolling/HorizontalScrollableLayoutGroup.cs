@@ -7,31 +7,24 @@ using UnityEngine.UI;
 
 namespace Com.Github.Knose1.Common.Scrolling
 {
-	[AddComponentMenu("Layout/Horizontal Scrollable Layout Group")]
-	public class HorizontalScrollableLayoutGroup : HorizontalLayoutGroup, IScrollingBehaviour
+	[AddComponentMenu("Layout/Scrollable/Horizontal Scrollable Layout Group")]
+	public class HorizontalScrollableLayoutGroup : ScrollingBehaviour
 	{
-		[SerializeField] public float ArrowScrollSpeed { get; set; } = 4;
-		[SerializeField] public float MouseScrollSpeed { get; set; } = 10;
 
-		[SerializeField] public bool AllowMouseScroll { get; set; } = false;
-
-		[SerializeField] public bool AllowDrag { get; set; } = false;
-
-		[SerializeField] public KeyCode KeyScrollHorizontal { get; set; } = KeyCode.LeftShift;
-
-		public void DoScroll()
+		override public void DoScroll()
 		{
-			throw new NotImplementedException();
-		}
+			Vector3 lPosition = transform.position;
 
-		public Vector2 GetInput()
-		{
-			throw new NotImplementedException();
-		}
+			float lTotalPriority = GetPriority();
+			float lMax = (lTotalPriority + 1  - (lTotalPriority - maxVisibleChild)/2) / maxVisibleChild;
+			float lMin = -lMax;
 
-		public override void CalculateLayoutInputHorizontal()
-		{
-			base.CalculateLayoutInputHorizontal();
+			float inputHorizontal = GetInput().x;
+
+			scroll += inputHorizontal;
+			scroll = Mathf.Clamp(scroll, lMin, lMax);
+
+			UpdateChildTransform();
 		}
 	}
 }

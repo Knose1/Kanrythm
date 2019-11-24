@@ -23,11 +23,11 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI {
 		private List<DifficultyButton> difficultyButtons = new List<DifficultyButton>();
 		private bool isMapSelected;
 
-		private VerticalScrollableLayoutGroup scrollingBehaviour;
+		private HorizontalScrollableLayoutGroup scrollingBehaviour;
 
 		private void Awake()
 		{
-			scrollingBehaviour = GetComponent<VerticalScrollableLayoutGroup>();
+			scrollingBehaviour = GetComponent<HorizontalScrollableLayoutGroup>();
 		}
 
 		public void GenerateDifficultyButtons(Map map)
