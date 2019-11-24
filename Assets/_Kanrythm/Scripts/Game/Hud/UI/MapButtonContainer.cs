@@ -28,6 +28,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 		[SerializeField] private Shadow mapButtonShadow;
 		[SerializeField] private MapButton mapButton;
 		public event Action<MapButtonContainer> OnSelectMap;
+		public event Action<MapButtonContainer> OnDeselectMap;
 
 		public MapButton MapButton { get => mapButton; }
 
@@ -79,6 +80,8 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 		{
 			SetScaleY(notSelectedHeight);
 			scrollingLayoutElement.priority = notSelectedPriority;
+
+			OnDeselectMap?.Invoke(this);
 		}
 
 		private void MapButton_OnSelectMap(int mapId)

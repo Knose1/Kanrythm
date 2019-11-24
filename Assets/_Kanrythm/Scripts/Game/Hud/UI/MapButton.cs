@@ -17,12 +17,17 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 	/// </summary>
 	class MapButton : MainMenuButton
 	{
+		private const float NO_TIMESTAMP = -1;
+
 		[NonSerialized] public int mapId = -1;
 		private Map map;
 
 		public event Action<int> OnDeselectMap;
 		public event Action<int> OnSelectMap;
 		public event Action<int, int> OnSelectedMapAndDifficulty;
+
+		private float selectedTimestamp = NO_TIMESTAMP;
+		private float requiredTimeBeforeNextSelected = 0.02f;
 
 		override protected void Start()
 		{
@@ -56,16 +61,22 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 
 		public void Focus()
 		{
-			OnSelectMap?.Invoke(mapId);
+			if (selectedTimestamp != NO_TIMESTAMP) return;
+
+			selectedTimestamp = Time.time;
 
 			GetComponentInChildren<DifficultyContainer>().OnMapSelect(mapId);
 			GetComponentInChildren<Text>().color = Color.white;
 
 			Select();
+			base.OnSelect(null);
 		}
 
 		public void Unfocus()
 		{
+			if (selectedTimestamp == NO_TIMESTAMP) return;
+
+			selectedTimestamp = NO_TIMESTAMP;
 			OnDeselectMap?.Invoke(mapId);
 
 			GetComponentInChildren<DifficultyContainer>().OnMapDeselect(mapId);
@@ -76,12 +87,15 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 
 		private void Button_OnClick()
 		{
+
+			if (Time.time - selectedTimestamp < requiredTimeBeforeNextSelected) return;
+
 			if (currentSelectionState == SelectionState.Selected) {
-				Unfocus();
+				OnDeselectMap?.Invoke(mapId);
 				return;
 			}
-
-			Focus();
+			else
+				OnSelectMap?.Invoke(mapId);
 		}
 
 		/// <summary>

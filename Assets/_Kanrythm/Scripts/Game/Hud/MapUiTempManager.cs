@@ -40,6 +40,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 				lButtonContainer.MapButton.mapId = i;
 				lButtonContainer.OnSelectedMapAndDifficulty += LButtonContainer_OnSelectedMapAndDifficulty;
 				lButtonContainer.OnSelectMap += LButtonContainer_OnSelectMap;
+				lButtonContainer.OnDeselectMap += LButtonContainer_OnDeselectMap;
 
 				mapContainers.Add(lButtonContainer);
 			}
@@ -58,6 +59,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 			this.currentSelectedMap = currentSelectedMap;
 
 			this.currentSelectedMap.MapButton.Focus();
+		}
+
+		private void LButtonContainer_OnDeselectMap(MapButtonContainer currentSelectedMap)
+		{
+			currentSelectedMap.MapButton.Unfocus();
+			if (this.currentSelectedMap == currentSelectedMap) this.currentSelectedMap = null;
 		}
 
 		private void LButtonContainer_OnSelectedMapAndDifficulty(int mapId, int diffId)
