@@ -30,6 +30,7 @@ namespace Com.Github.Knose1.Common.Scrolling
 
 		[Header("Other")]
 		public float maxVisibleChild = 1;
+		[Range(0,1)] public float scrollValueOnStart = 0.5f;
 		[Range(0,1)] public float scroll = 0.5f;
 		[NonSerialized] public float _scroll = 0.5f;
 		public bool inspectorOverrideScroll = true;
@@ -171,13 +172,19 @@ namespace Com.Github.Knose1.Common.Scrolling
 			return Vector2.zero;
 		}
 
-		protected override void Start()
+		protected override void Awake()
 		{
-			base.Start();
+			base.Awake();
 			rectTransform = transform as RectTransform;
 		}
 
-#if UNITY_EDITOR
+		protected override void Start()
+		{
+			base.Start();
+			_scroll = scrollValueOnStart;
+		}
+
+		#if UNITY_EDITOR
 		protected override void OnValidate()
 		{
 			Start();
@@ -185,6 +192,6 @@ namespace Com.Github.Knose1.Common.Scrolling
 			if (maxVisibleChild < 1) maxVisibleChild = 1;
 			UpdateChildTransform();
 		}
-#endif
+		#endif
 	}
 }
