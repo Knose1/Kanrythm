@@ -40,18 +40,6 @@ namespace Com.Github.Knose1.Common.Scrolling
 
 		public abstract void DoScroll();
 
-		// Rappel envoyé au graphique après une modification des enfants de Transform
-		protected void OnTransformChildrenChanged()
-		{
-			Start();
-			UpdateChildTransform();
-		}
-
-		protected override void OnRectTransformDimensionsChange()
-		{
-			OnTransformChildrenChanged();
-		}
-
 		protected void UpdateChildTransform()
 		{
 			if (inspectorOverrideScroll) _scroll = scroll;
@@ -187,11 +175,24 @@ namespace Com.Github.Knose1.Common.Scrolling
 		#if UNITY_EDITOR
 		protected override void OnValidate()
 		{
-			Start();
+			Awake();
 
 			if (maxVisibleChild < 1) maxVisibleChild = 1;
 			UpdateChildTransform();
 		}
 		#endif
+
+
+		// Rappel envoyé au graphique après une modification des enfants de Transform
+		protected void OnTransformChildrenChanged()
+		{
+			Awake();
+			UpdateChildTransform();
+		}
+
+		protected override void OnRectTransformDimensionsChange()
+		{
+			OnTransformChildrenChanged();
+		}
 	}
 }
