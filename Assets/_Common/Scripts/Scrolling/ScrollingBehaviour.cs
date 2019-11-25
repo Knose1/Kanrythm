@@ -1,89 +1,197 @@
-ï»¿using UnityEngine;
-using System.Collections;
-using UnityEditor;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Com.Github.Knose1.Common.Scrolling
 {
-	public class ScrollingBehaviour : MonoBehaviour
+	[ExecuteAlways]
+	abstract public class ScrollingBehaviour : UIBehaviour
 	{
-		public float arrowScrollSpeed = 4;
-		public float mouseScrollSpeed = 10;
 
-		protected float scrollX = 0;
-		protected float scrollY = 0;
+		[Header("Input")]
+		public float dragScrollSpeed = 0.01f;
+		public float mouseScrollSpeed = 0.05f;
+		public string mouseXAxis = "MouseX";
+		public string mouseYAxis = "MouseY";
+		public KeyCode keyScrollHorizontal = KeyCode.LeftShift;
+		public bool allowMouseScroll = true;
+		public bool allowDrag = false;
 
-		public float minX = 0;
-		public float maxX = 0;
+		[Header("Curve")]
+		[Tooltip("The min value of the curves must be 0 and the max 1 on the two axis")]
+		public AnimationCurve xRelativeCurve = AnimationCurve.Linear(0,0,1,0);
+		public AnimationCurve yRelativeCurve = AnimationCurve.Linear(0,0,1,0);
+		public AnimationCurve scaleCurve     = AnimationCurve.Constant(0,1,1);
 
-		public float minY = 0;
-		public float maxY = 0;
+		public RectOffset curveRect;
+		public float minCurveScale;
+		public float maxCurveScale;
 
-		public string horizontalAxis = "Horizontal";
-		public string verticalAxis = "Vertical";
+		[Header("Other")]
+		public float maxVisibleChild = 1;
+		[Range(0,1)] public float scrollValueOnStart = 0.5f;
+		[Range(0,1)] public float scroll = 0.5f;
+		[NonSerialized] public float _scroll = 0.5f;
+		public bool inspectorOverrideScroll = true;
+		public bool inspectorRelativeScroll = false;
 
-		public KeyCode keyInvertMouseScroll = KeyCode.LeftShift;
+		protected RectTransform rectTransform;
 
-		public bool allowMouseScroll;
+		public abstract void DoScroll();
 
-		private Vector3 startPosition;
-
-		protected void Start()
+		// Rappel envoyé au graphique après une modification des enfants de Transform
+		protected void OnTransformChildrenChanged()
 		{
-			SetStartPosition(transform.position);
+			Start();
+			UpdateChildTransform();
 		}
 
-		private void SetStartPosition(Vector3 position)
+		protected override void OnRectTransformDimensionsChange()
 		{
-			startPosition = position;
+			OnTransformChildrenChanged();
 		}
 
-		public void doScrollHorizontal()
+		protected void UpdateChildTransform()
 		{
-			float inputHorizontal = GetInput().x;
+			if (inspectorOverrideScroll) _scroll = scroll;
 
-			//if (allowMouseScroll) return 0;
+			float lScroll = _scroll;
 
-			Vector3 lPos = transform.localPosition;
-			lPos.x += inputHorizontal;
+			if (inspectorRelativeScroll) lScroll += scroll;
 
-			if (minX > maxX) minX = maxX;
+			lScroll = Mathf.Clamp(lScroll, 0, 1);
 
-			lPos.x = Mathf.Clamp(scrollX, minX, maxX) + startPosition.x;
+			int lChildCount = transform.childCount;
+			RectTransform lChildTransform;
 
-			transform.localPosition = lPos;
-		}
+			float lCurrentEvaluate = 0;
+			float lCurrentEvaluate2 = 0;
 
-		public void doScrollVertical()
-		{
-			float inputVertical = GetInput().y;
+			float lCurveXMin = rectTransform.rect.xMin + curveRect.left;
+			float lCurveXMax = rectTransform.rect.width / 2 - curveRect.right;
+			float lCurveYMin = rectTransform.rect.yMin + curveRect.top;
+			float lCurveYMax = rectTransform.rect.height / 2 - curveRect.bottom;
 
-			Vector3 lPos = transform.localPosition;
-			lPos.y += inputVertical;
+			float lCurveX;
+			float lCurveY;
 
-			if (minY > maxY) minY = maxY;
+			float lTotalPriority = GetPriority(out List<float> lPriorityList);
 
-			lPos.y = Mathf.Clamp(scrollY, minY, maxY);
+			float lMax = (lTotalPriority + 1  - (lTotalPriority - maxVisibleChild)/2) / maxVisibleChild;
+			float lMin = -lMax;
 
-			transform.localPosition = lPos;
-		}
-
-		private Vector2 GetInput()
-		{
-			if (Input.mouseScrollDelta != Vector2.zero && allowMouseScroll)
+			for (int i = 0; i < lChildCount; i++)
 			{
-				Vector2 lInputMouseScroll = Input.mouseScrollDelta;
+				lChildTransform = transform.GetChild(i) as RectTransform;
 
-				if (Input.GetKey(keyInvertMouseScroll)) {
-					float lTempX = lInputMouseScroll.x;
-					lInputMouseScroll.x = lInputMouseScroll.y;
-					lInputMouseScroll.y = lTempX;
+				lCurrentEvaluate = (lPriorityList[i] - (lTotalPriority - maxVisibleChild) / 2) / maxVisibleChild;
+
+				lCurrentEvaluate2 = lCurrentEvaluate + Mathf.Lerp(lMin, lMax, lScroll);
+
+
+				//lCurrentEvaluate2 = Mathf.Clamp(lCurrentEvaluate2, 0, 1);
+
+
+				lCurveX = xRelativeCurve.Evaluate(lCurrentEvaluate2) * 2 * lCurveXMax + lCurveXMin;
+				lCurveY = yRelativeCurve.Evaluate(lCurrentEvaluate2) * 2 * lCurveYMax + lCurveYMin;
+
+				if (lCurrentEvaluate2 > 1)
+				{
+					lCurveX += lChildTransform.rect.width;
+					lCurveY += lChildTransform.rect.height;
+				}
+				else if (lCurrentEvaluate2 < 0)
+				{
+					lCurveX -= lChildTransform.rect.width;
+					lCurveY -= lChildTransform.rect.height;
 				}
 
-				return Input.mouseScrollDelta * mouseScrollSpeed;
+				lChildTransform.localPosition = new Vector2(lCurveX, lCurveY);
+
+				lChildTransform.localScale = Vector3.one * (scaleCurve.Evaluate(lCurrentEvaluate2) * (maxCurveScale - minCurveScale) + minCurveScale);
 			}
-			return new Vector2(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis)) * arrowScrollSpeed;
 		}
 
+		protected float GetPriority() => GetPriority(indexInPriority: out _);
+		protected float GetPriority(out List<float> indexInPriority)
+		{
+			ScrollingLayoutElement lChildLayoutElement;
+			float lChildCount = transform.childCount;
+			float lTotalPriority = 0;
+			indexInPriority = new List<float>();
+
+			for (int i = 0; i < lChildCount; i++)
+			{
+				lChildLayoutElement = transform.GetChild(i).GetComponent<ScrollingLayoutElement>();
+				if (lChildLayoutElement)
+				{
+					lTotalPriority += lChildLayoutElement.priority;
+					indexInPriority.Add(lTotalPriority - lChildLayoutElement.priority / 2);
+					continue;
+				}
+				lTotalPriority += 1;
+				indexInPriority.Add(lTotalPriority);
+			}
+
+			return lTotalPriority;
+		}
+
+		private void SetFocusOnChild(RectTransform childRect)
+		{
+			if (childRect.parent != transform)
+				throw new Exception("\'" + childRect.gameObject.name + "\' is not a child of \'" + gameObject.name + "\'.");
+
+			throw new NotImplementedException();
+		}
+
+		protected Vector2 GetInput()
+		{
+			if (RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, Input.mousePosition, Camera.current, out Vector2 lLocalPoint))
+			{
+				if (Input.mouseScrollDelta != Vector2.zero && allowMouseScroll)
+				{
+					Vector2 lInputMouseScroll = Input.mouseScrollDelta;
+
+					if (Input.GetKey(keyScrollHorizontal))
+					{
+						float lTempX = lInputMouseScroll.x;
+						lInputMouseScroll.x = lInputMouseScroll.y;
+						lInputMouseScroll.y = lTempX;
+					}
+
+					return lInputMouseScroll * mouseScrollSpeed;
+				}
+				else if (Input.GetMouseButton(0) && allowDrag)
+				{
+					return new Vector2(Input.GetAxis(mouseXAxis), Input.GetAxis(mouseYAxis)) * dragScrollSpeed;
+				}
+
+			}
+
+			return Vector2.zero;
+		}
+
+		protected override void Awake()
+		{
+			base.Awake();
+			rectTransform = transform as RectTransform;
+		}
+
+		protected override void Start()
+		{
+			base.Start();
+			_scroll = scrollValueOnStart;
+		}
+
+		#if UNITY_EDITOR
+		protected override void OnValidate()
+		{
+			Start();
+
+			if (maxVisibleChild < 1) maxVisibleChild = 1;
+			UpdateChildTransform();
+		}
+		#endif
 	}
 }

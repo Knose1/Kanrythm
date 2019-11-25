@@ -10,7 +10,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 	/// <summary>
 	/// It contains all the map button containers
 	/// </summary>
-	[RequireComponent(typeof(ScrollingBehaviour))]
+	[RequireComponent(typeof(VerticalScrollableLayoutGroup))]
 	public class MapUiTempManager : MonoBehaviour {
 
 		[SerializeField] MapButtonContainer mapButtonContainerTemplate;
@@ -24,11 +24,11 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 		public event Action<int, int> OnSelectedMapAndDifficulty;
 
 		private MapButtonContainer currentSelectedMap;
-		private ScrollingBehaviour scrollingBehaviour;
+		private VerticalScrollableLayoutGroup scrollingBehaviour;
 
 		private void Awake()
 		{
-			scrollingBehaviour = GetComponent<ScrollingBehaviour>();
+			scrollingBehaviour = GetComponent<VerticalScrollableLayoutGroup>();
 		}
 		private void Start () {
 			int mapCount = MapLoader.Maplist.Count;
@@ -40,6 +40,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 				lButtonContainer.MapButton.mapId = i;
 				lButtonContainer.OnSelectedMapAndDifficulty += LButtonContainer_OnSelectedMapAndDifficulty;
 				lButtonContainer.OnSelectMap += LButtonContainer_OnSelectMap;
+				lButtonContainer.OnDeselectMap += LButtonContainer_OnDeselectMap;
 
 				mapContainers.Add(lButtonContainer);
 			}
@@ -60,6 +61,18 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 			this.currentSelectedMap.MapButton.Focus();
 		}
 
+		private void LButtonContainer_OnDeselectMap(MapButtonContainer currentSelectedMap)
+		{
+			currentSelectedMap.MapButton.Unfocus();
+			if (this.currentSelectedMap == currentSelectedMap) this.currentSelectedMap = null;
+		}
+
+		public void DeselectCurrentMap()
+		{
+			currentSelectedMap?.MapButton.Unfocus();
+			currentSelectedMap = null;
+		}
+
 		private void LButtonContainer_OnSelectedMapAndDifficulty(int mapId, int diffId)
 		{
 			OnSelectedMapAndDifficulty?.Invoke(mapId, diffId);
@@ -67,7 +80,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 
 		private void Update()
 		{
-			scrollingBehaviour.doScrollVertical();
+			scrollingBehaviour.DoScroll();
 		}
 	}
 }
