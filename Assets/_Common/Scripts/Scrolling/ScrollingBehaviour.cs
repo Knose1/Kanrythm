@@ -9,8 +9,6 @@ namespace Com.Github.Knose1.Common.Scrolling
 	abstract public class ScrollingBehaviour : UIBehaviour
 	{
 
-
-
 		[Header("Input")]
 		public float dragScrollSpeed = 0.01f;
 		public float mouseScrollSpeed = 0.05f;
@@ -31,10 +29,12 @@ namespace Com.Github.Knose1.Common.Scrolling
 		public float maxCurveScale;
 
 		[Header("Other")]
-		public float scroll = 0.5f;
 		public float maxVisibleChild = 1;
+		[Range(0,1)] public float scroll = 0.5f;
+		[NonSerialized] public float _scroll = 0.5f;
+		public bool inspectorOverrideScroll = true;
+		public bool inspectorRelativeScroll = false;
 
-		protected Vector3 startPosition;
 		protected RectTransform rectTransform;
 
 		public abstract void DoScroll();
@@ -46,8 +46,21 @@ namespace Com.Github.Knose1.Common.Scrolling
 			UpdateChildTransform();
 		}
 
+		protected override void OnRectTransformDimensionsChange()
+		{
+			OnTransformChildrenChanged();
+		}
+
 		protected void UpdateChildTransform()
 		{
+			if (inspectorOverrideScroll) _scroll = scroll;
+
+			float lScroll = _scroll;
+
+			if (inspectorRelativeScroll) lScroll += scroll;
+
+			lScroll = Mathf.Clamp(lScroll, 0, 1);
+
 			int lChildCount = transform.childCount;
 			RectTransform lChildTransform;
 
@@ -64,13 +77,16 @@ namespace Com.Github.Knose1.Common.Scrolling
 
 			float lTotalPriority = GetPriority(out List<float> lPriorityList);
 
+			float lMax = (lTotalPriority + 1  - (lTotalPriority - maxVisibleChild)/2) / maxVisibleChild;
+			float lMin = -lMax;
+
 			for (int i = 0; i < lChildCount; i++)
 			{
 				lChildTransform = transform.GetChild(i) as RectTransform;
 
 				lCurrentEvaluate = (lPriorityList[i] - (lTotalPriority - maxVisibleChild) / 2) / maxVisibleChild;
 
-				lCurrentEvaluate2 = lCurrentEvaluate + scroll;
+				lCurrentEvaluate2 = lCurrentEvaluate + Mathf.Lerp(lMin, lMax, lScroll);
 
 
 				//lCurrentEvaluate2 = Mathf.Clamp(lCurrentEvaluate2, 0, 1);
@@ -158,7 +174,6 @@ namespace Com.Github.Knose1.Common.Scrolling
 		protected override void Start()
 		{
 			base.Start();
-			startPosition = transform.position;
 			rectTransform = transform as RectTransform;
 		}
 
@@ -168,7 +183,7 @@ namespace Com.Github.Knose1.Common.Scrolling
 			Start();
 
 			if (maxVisibleChild < 1) maxVisibleChild = 1;
-			DoScroll();
+			UpdateChildTransform();
 		}
 #endif
 	}

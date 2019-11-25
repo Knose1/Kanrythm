@@ -13,16 +13,10 @@ namespace Com.Github.Knose1.Common.Scrolling
 
 		override public void DoScroll()
 		{
-			Vector3 lPosition = transform.position;
-
-			float lTotalPriority = GetPriority();
-			float lMax = (lTotalPriority + 1  - (lTotalPriority - maxVisibleChild)/2) / maxVisibleChild;
-			float lMin = -lMax;
-
 			float inputHorizontal = GetInput().x;
 
-			scroll += inputHorizontal;
-			scroll = Mathf.Clamp(scroll, lMin, lMax);
+			_scroll += inputHorizontal;
+			_scroll = Mathf.Clamp(_scroll, 0, 1);
 
 			UpdateChildTransform();
 		}

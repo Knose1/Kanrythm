@@ -67,6 +67,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 			if (this.currentSelectedMap == currentSelectedMap) this.currentSelectedMap = null;
 		}
 
+		public void DeselectCurrentMap()
+		{
+			currentSelectedMap?.MapButton.Unfocus();
+			currentSelectedMap = null;
+		}
+
 		private void LButtonContainer_OnSelectedMapAndDifficulty(int mapId, int diffId)
 		{
 			OnSelectedMapAndDifficulty?.Invoke(mapId, diffId);
