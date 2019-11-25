@@ -233,7 +233,7 @@ MonoBehaviour:
   minCurveScale: 0.1
   maxCurveScale: 1
   maxVisibleChild: 6
-  scrollValueOnStart: 0.68
+  scrollValueOnStart: 0.5
   scroll: 0
   inspectorOverrideScroll: 0
   inspectorRelativeScroll: 0
