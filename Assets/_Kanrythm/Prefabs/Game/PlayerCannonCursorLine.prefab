@@ -102,6 +102,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCannonCursorLine
       objectReference: {fileID: 0}
+    - target: {fileID: 7255080050209277986, guid: 9ec454eda4c73ca47af4366723106083,
+        type: 3}
+      propertyPath: isRed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 820153397266496638, guid: 9ec454eda4c73ca47af4366723106083,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -157,9 +162,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7255080050209277986, guid: 9ec454eda4c73ca47af4366723106083,
+    - target: {fileID: 820153396335700151, guid: 9ec454eda4c73ca47af4366723106083,
         type: 3}
-      propertyPath: isRed
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 662542847, guid: 9ec454eda4c73ca47af4366723106083, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 820153395864225313, guid: 9ec454eda4c73ca47af4366723106083,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 662542849, guid: 9ec454eda4c73ca47af4366723106083, type: 3}
+      propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

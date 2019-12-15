@@ -6,20 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Com.Github.Knose1.Kanrythm
+namespace Com.Github.Knose1.Common
 {
-	class StretchableDeltaTime : StateMachine, IDisposable
+	public class StretchableDeltaTime : StateMachine, IDisposable
 	{
 		private float startTime = -1;
 		private float scaleTime = 1;
 		private float elapsedTime = 0;
+		private float scaledDeltaTime;
 
 		private static StretchableDeltaTime instance;
+
 		public static StretchableDeltaTime Instance { get => instance; }
 
 		public float StartTime { get => startTime; }
 		public float ScaleTime { get => scaleTime; set => scaleTime = Math.Max(0.001f, value); }
 		public float ElapsedTime { get => elapsedTime; }
+		public float ScaledDeltaTime { get => scaledDeltaTime; }
 		public bool IsPlaying { get => doAction != DoActionVoid; }
 
 		public StretchableDeltaTime() {
@@ -39,7 +42,11 @@ namespace Com.Github.Knose1.Kanrythm
 		/// </summary>
 		public void TogglePauseDeltaTime()
 		{
-			if (doAction == DoActionVoid)
+			TogglePauseDeltaTime(doAction == DoActionNormal);
+		}
+		public void TogglePauseDeltaTime(bool setToPause)
+		{
+			if (!setToPause)
 			{
 				doAction = DoActionNormal;
 			}
@@ -60,13 +67,23 @@ namespace Com.Github.Knose1.Kanrythm
 		protected override void DoActionNormal()
 		{
 			base.DoActionNormal();
-			elapsedTime += Time.deltaTime * scaleTime;
+
+			float lNewDelta = Time.deltaTime * scaleTime;
+
+			scaledDeltaTime = lNewDelta;
+			elapsedTime += lNewDelta;
+
 		}
 
 		public void Dispose()
 		{
 			instance = null;
 			Destroy(this);
+		}
+
+		public float GetElapsedTimeRatio(float start, float targetTime)
+		{
+			return (ElapsedTime - start) / targetTime;
 		}
 	}
 }

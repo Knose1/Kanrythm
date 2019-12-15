@@ -135,10 +135,8 @@ namespace Com.Github.Knose1.Common.Scrolling
 
 		protected Vector2 GetInput()
 		{
-			bool lDebug = false;
-			if (lDebug = RectTransformUtility.RectangleContainsScreenPoint(transform as RectTransform, Input.mousePosition, Camera.main))
+			if (RectTransformUtility.RectangleContainsScreenPoint(transform as RectTransform, Input.mousePosition, Camera.main))
 			{
-				Debug.Log(lDebug);
 				if (Input.mouseScrollDelta != Vector2.zero && allowMouseScroll)
 				{
 					Vector2 lInputMouseScroll = Input.mouseScrollDelta;

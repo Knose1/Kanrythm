@@ -20,8 +20,9 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 		[Header("Animation Trigger")]
 		[SerializeField] private string playTrigger = "Play";
 		[SerializeField] private string returnToMenuTrigger = "ReturnToMenu";
+		[SerializeField] private string optionTrigger = "OptionDock";
 
-		private bool isOnTheLeftDock = true;
+		private bool isOnMainMenuDock = true;
 
 		private Animator animator;
 
@@ -49,7 +50,19 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 		{
 			animator.SetTrigger(playTrigger);
 
-			isOnTheLeftDock = false;
+			isOnMainMenuDock = false;
+		}
+
+		public void OnButtonOption()
+		{
+			animator.SetTrigger(optionTrigger);
+
+			isOnMainMenuDock = false;
+		}
+
+		public void OnOpenMapFolder()
+		{
+			MapLoader.OpenMapFolder();
 		}
 
 		public void OnQuitButton()
@@ -58,16 +71,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 			Application.Quit();
 		}
 
-		public void OnOpenMapFolder()
-		{
-			MapLoader.OpenMapFolder();
-		}
 
 		private void Exit_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
 		{
-			if (!isOnTheLeftDock)
+			if (!isOnMainMenuDock)
 			{
-				isOnTheLeftDock = true;
+				isOnMainMenuDock = true;
 				animator.SetTrigger(returnToMenuTrigger);
 			}
 			else {

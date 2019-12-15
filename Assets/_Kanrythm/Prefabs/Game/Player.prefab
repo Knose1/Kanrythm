@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: 2083241055
   m_SortingLayer: 2
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: c8446e25b0435a449a3e04dd2c69ee97, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b2596777c187aee43acd3fc1c941fc13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,10 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canonTargetPosition: {fileID: 3765158130129353109}
   cannon1Line: {fileID: 1378046748585477716}
-  inputClickCannon1Line: Fire1
-  inputLockCannon1Line: Fire3
   cannon2NoLine: {fileID: 1764860320170734727}
-  inputClickCannon2NoLine: Fire2
 --- !u!210 &8994026837275554708
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -245,7 +242,7 @@ SpriteRenderer:
   m_SortingLayerID: 2083241055
   m_SortingLayer: 2
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: c8446e25b0435a449a3e04dd2c69ee97, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b2596777c187aee43acd3fc1c941fc13, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
