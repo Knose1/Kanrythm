@@ -10,5 +10,6 @@ namespace Com.Github.Knose1.Common.InputController {
 		void InitControllerProject();
 
 		List<RebindingFunction> GetRebindingFunctions();
+		List<RebindingFunction> GetRebindingFunctionsEditor();
 	}
 }

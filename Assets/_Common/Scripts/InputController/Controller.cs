@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,9 +11,11 @@ namespace Com.Github.Knose1.Common.InputController {
 	{
 		public readonly Action function;
 		public readonly string nameInInspector;
+		public readonly string defaultKeyName;
 
-		public RebindingFunction(Action function, string nameInInspector)
+		public RebindingFunction(Action function, string nameInInspector, string defaultKeyName)
 		{
+			this.defaultKeyName = defaultKeyName;
 			this.function = function;
 			this.nameInInspector = nameInInspector;
 		}
@@ -33,8 +37,7 @@ namespace Com.Github.Knose1.Common.InputController {
 
 		private void Awake() {
 			if (instance){
-				Destroy(gameObject);
-				return;
+				throw new Exception("There are two active Controller in the scene");
 			}
 
 			InitControllerProject();
@@ -46,6 +49,7 @@ namespace Com.Github.Knose1.Common.InputController {
 		public void Rebind(InputAction inputAction, List<InputAction> rebindListCompare)
 		{
 			this.rebindListCompare = rebindListCompare;
+
 			if (currentActionRebinding != null) currentActionRebinding.Cancel();
 
 			Debug.Log(REBINDING_LOG_PREFIX + inputAction.name);
@@ -67,7 +71,7 @@ namespace Com.Github.Knose1.Common.InputController {
 		private void Rebinding_OnCancel(InputActionRebindingExtensions.RebindingOperation obj)
 		{
 			Debug.Log(REBINDING_LOG_PREFIX + "Canceled");
-			OnRebindEnd(obj.action.activeControl);
+			OnRebindEnd(obj.action.controls[0]);
 			currentActionRebinding = null;
 		}
 
@@ -102,5 +106,23 @@ namespace Com.Github.Knose1.Common.InputController {
 
 			input.Disable();
 		}
+
+		#if UNITY_EDITOR
+		[Obsolete("This function can ONLY be used by Unity To generate a new Controller", false)]
+		public static void TryCreateController(UnityEditor.MenuCommand menu)
+		{
+			if (!FindObjectOfType<Controller>()) CreateController(menu);
+		}
+		[Obsolete("This function can ONLY be used by Unity to generate a new Controller", false), MenuItem("GameObject/Input/Controller", false, 10)]
+		
+		public static void CreateController(UnityEditor.MenuCommand menu)
+		{
+			if (FindObjectOfType<Controller>()) throw new Exception("There is already an active Controller in the scene");
+
+			//Root GameObject
+			GameObject gameObject = new GameObject("Controller");
+			Controller controller = gameObject.AddComponent<Controller>();
+		}
+		#endif
 	}
 } 
