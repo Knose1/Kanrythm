@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5560923259117549479}
   - component: {fileID: 189888173169684046}
   - component: {fileID: 5560923259117549472}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 8994026837275554713}
   - component: {fileID: 8994026837275554715}
   - component: {fileID: 8994026837275554708}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 9182632958370102363}
   - component: {fileID: 1154540786044555262}
   - component: {fileID: 9182632958370102356}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,6 +276,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCannonCursorLine
       objectReference: {fileID: 0}
+    - target: {fileID: 607818362736672640, guid: 159893cce3897374388a0eff09952510,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 607818363668638536, guid: 159893cce3897374388a0eff09952510,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 607818362736672647, guid: 159893cce3897374388a0eff09952510,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -331,6 +341,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 220292376650537478, guid: 159893cce3897374388a0eff09952510,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 607818364136949210, guid: 159893cce3897374388a0eff09952510,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247590547, guid: 159893cce3897374388a0eff09952510, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 159893cce3897374388a0eff09952510, type: 3}
 --- !u!4 &8994026838305583624 stripped
@@ -368,6 +392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerCannonCursorNoLine
+      objectReference: {fileID: 0}
+    - target: {fileID: 820153397266496633, guid: 9ec454eda4c73ca47af4366723106083,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 820153397266496638, guid: 9ec454eda4c73ca47af4366723106083,
         type: 3}
@@ -423,6 +452,20 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 820153396335700145, guid: 9ec454eda4c73ca47af4366723106083,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 820153395864225315, guid: 9ec454eda4c73ca47af4366723106083,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 662542847, guid: 9ec454eda4c73ca47af4366723106083, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ec454eda4c73ca47af4366723106083, type: 3}

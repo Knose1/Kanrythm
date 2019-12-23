@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4639949773032213012}
   - component: {fileID: 188188545}
   - component: {fileID: 2190880003505650136}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Beat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ MonoBehaviour:
   endSize: 1
   fadeOutTime: 1
   beatReciverTag: PlayerCursor
-  destroyParticles: {fileID: 4228222992847205003, guid: 0fdba2fdb1f4d0e4aa5dd489b0d092b3,
+  destroyParticles: {fileID: 8364672636544916962, guid: 5ac2a902c6a602245b5a1b1d718e074e,
     type: 3}
 --- !u!58 &188188545
 CircleCollider2D:

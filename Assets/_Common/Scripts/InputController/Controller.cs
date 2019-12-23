@@ -3,57 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Com.Github.Knose1.Common {
-	public class Controller : MonoBehaviour {
+namespace Com.Github.Knose1.Common.InputController {
+
+	public struct RebindingFunction
+	{
+		public readonly Action function;
+		public readonly string nameInInspector;
+
+		public RebindingFunction(Action function, string nameInInspector)
+		{
+			this.function = function;
+			this.nameInInspector = nameInInspector;
+		}
+	}
+
+	public partial class Controller : MonoBehaviour
+	{
 		private const string REBINDING_LOG_PREFIX = "[Rebinding] ";
 		private static Controller instance;
 		public static Controller Instance { get { return instance; } }
 
-		private GameControls input;
-		private List<InputAction> rebindListCompare = new List<InputAction>();
-		private InputActionRebindingExtensions.RebindingOperation currentActionRebinding;
+		private List<InputAction> rebindListCompare;
+		protected List<RebindingFunction> rebindingFunctions;
+		internal List<RebindingFunction> RebindingFunctions => rebindingFunctions;
 
-		public GameControls Input { get => input; }
+		protected InputActionRebindingExtensions.RebindingOperation currentActionRebinding;
 
-		private void Awake(){
+		public static event Action<InputControl> OnRebindEnd;
+
+		private void Awake() {
 			if (instance){
 				Destroy(gameObject);
 				return;
 			}
 
-			input = new GameControls();
+			InitControllerProject();
 
 			instance = this;
-
-			
 		}
 
-		public void RebindCannon1()
-		{
-			rebindListCompare.Clear();
-			rebindListCompare.Add(input.Gameplay.Cannon2);
-			rebindListCompare.Add(input.Gameplay.LockCannon);
-			Rebind(input.Gameplay.Cannon1);
-		}
 
-		public void RebindCannon2()
+		public void Rebind(InputAction inputAction, List<InputAction> rebindListCompare)
 		{
-			rebindListCompare.Clear();
-			rebindListCompare.Add(input.Gameplay.Cannon1);
-			rebindListCompare.Add(input.Gameplay.LockCannon);
-			Rebind(input.Gameplay.Cannon2);
-		}
-
-		public void RebindLockCannon()
-		{
-			rebindListCompare.Clear();
-			rebindListCompare.Add(input.Gameplay.Cannon1);
-			rebindListCompare.Add(input.Gameplay.Cannon2);
-			Rebind(input.Gameplay.LockCannon);
-		}
-
-		public void Rebind(InputAction inputAction)
-		{
+			this.rebindListCompare = rebindListCompare;
 			if (currentActionRebinding != null) currentActionRebinding.Cancel();
 
 			Debug.Log(REBINDING_LOG_PREFIX + inputAction.name);
@@ -68,12 +60,14 @@ namespace Com.Github.Knose1.Common {
 		private void Rebinding_OnComplete(InputActionRebindingExtensions.RebindingOperation obj)
 		{
 			Debug.Log(REBINDING_LOG_PREFIX + "Complete");
+			OnRebindEnd(obj.selectedControl);
 			currentActionRebinding = null;
 		}
 
 		private void Rebinding_OnCancel(InputActionRebindingExtensions.RebindingOperation obj)
 		{
 			Debug.Log(REBINDING_LOG_PREFIX + "Canceled");
+			OnRebindEnd(obj.action.activeControl);
 			currentActionRebinding = null;
 		}
 

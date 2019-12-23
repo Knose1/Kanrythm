@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4228222992847205001}
   - component: {fileID: 567947154003404224}
   - component: {fileID: -3165998651672382012}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BeatDestroyParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,12 +806,12 @@ ParticleSystem:
           m_RotationOrder: 4
     arc:
       value: 360
-      mode: 0
+      mode: 1
       spread: 0
       speed:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 1
+        scalar: 5
         minScalar: 1
         maxCurve:
           serializedVersion: 2
@@ -867,7 +867,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 500
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -977,7 +977,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 3
+        scalar: 0
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1027,7 +1027,7 @@ ParticleSystem:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-      cycleCount: 50
+      cycleCount: 1
       repeatInterval: 0.01
       probability: 1
   SizeModule:
@@ -1760,7 +1760,7 @@ ParticleSystem:
     orbitalY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 100
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2025,7 +2025,7 @@ ParticleSystem:
     radial:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 2.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4037,7 +4037,7 @@ ParticleSystem:
     maxLights: 20
   TrailModule:
     enabled: 1
-    mode: 0
+    mode: 1
     ratio: 1
     lifetime:
       serializedVersion: 2
@@ -4868,7 +4868,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

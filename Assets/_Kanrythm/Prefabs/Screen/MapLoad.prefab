@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2715442784919880811}
   - component: {fileID: 1021928398722883307}
-  m_Layer: 0
-  m_Name: Preload
+  m_Layer: 5
+  m_Name: MapLoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

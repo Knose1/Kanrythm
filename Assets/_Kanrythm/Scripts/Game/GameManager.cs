@@ -5,6 +5,7 @@ using Com.Github.Knose1.Kanrythm.Loader;
 using Com.Github.Knose1.Kanrythm.Data;
 using Com.Github.Knose1.Common.File;
 using Com.Github.Knose1.Common;
+using Com.Github.Knose1.Common.InputController;
 using Com.Github.Knose1.Kanrythm.Data.Timing;
 using Com.Github.Knose1.Kanrythm.Game.PlayerType;
 using Com.Github.Knose1.Kanrythm.Game.BeatObject;
