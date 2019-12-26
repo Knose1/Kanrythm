@@ -6,24 +6,27 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using Com.Github.Knose1.Common.InputController;
+using Com.Github.Knose1.InputUtils.InputController;
 
-namespace Com.Github.Knose1.Common.Ui {
-	[CustomEditor(typeof(KeyInputButton))]
-	public class KeyInputButtonEditor : Editor {
+namespace Com.Github.Knose1.InputUtils.Ui {
+	[CustomEditor(typeof(BindingInputButton))]
+	public class BindingInputButtonEditor : Editor {
 
-		private KeyInputButton script;
+		private BindingInputButton script;
 
 		public override void OnInspectorGUI()
 		{
-			script = target as KeyInputButton;
+			script = target as BindingInputButton;
 
 			Controller controller = FindObjectOfType<Controller>();
 
 			if (controller)
 			{
 				DrawDefaultInspector();
-				List<RebindingFunction> rebindingFunctions = controller.GetRebindingFunctions();
+
+				if (controller.RebindingFunctionsEditor == null) controller.GenerateRebindingFunctionsEditor();
+
+				List<RebindingFunction> rebindingFunctions = controller.RebindingFunctionsEditor;
 				List<string> names = new List<string>();
 				for (int i = rebindingFunctions.Count - 1; i >= 0; i--)
 				{

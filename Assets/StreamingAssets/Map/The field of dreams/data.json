@@ -1,7 +1,7 @@
 ﻿{
 	"name"			: "The field of dreams",
 	"audio"			: "level.ogg",
-	"author"		: "Someone",
+	"author"		: "Paulius Jurgelevièius",
 	"difficulties"	: ["Easy", "Normal"],
 	"timing" : {
 		"bpm":144,

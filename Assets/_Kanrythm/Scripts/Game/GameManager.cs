@@ -5,10 +5,11 @@ using Com.Github.Knose1.Kanrythm.Loader;
 using Com.Github.Knose1.Kanrythm.Data;
 using Com.Github.Knose1.Common.File;
 using Com.Github.Knose1.Common;
-using Com.Github.Knose1.Common.InputController;
+using Com.Github.Knose1.InputUtils.InputController;
 using Com.Github.Knose1.Kanrythm.Data.Timing;
 using Com.Github.Knose1.Kanrythm.Game.PlayerType;
 using Com.Github.Knose1.Kanrythm.Game.BeatObject;
+using System.Collections.Generic;
 
 namespace Com.Github.Knose1.Kanrythm.Game {
 
@@ -45,6 +46,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		/// If autoClear is enabled, the beats will automatiquely be destroyed when hiting the player's white outerborder (100% accuracy)
 		/// </summary>
 		public bool autoClear = false;
+		private List<PulseCamera> pulseCameras;
 
 		private RythmMusicPlayer musicPlayer;
 		private GameObject gameContainer;
@@ -77,6 +79,8 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		override protected void Start()
 		{
 			transform.parent = GameRootAndObjectLibrary.Instance.ManagerContainer;
+			pulseCameras = new List<PulseCamera>(FindObjectsOfType<PulseCamera>());
+			pulseCameras.EnableAll();
 
 			base.Start();
 		}
@@ -84,6 +88,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		private void OnDestroy()
 		{
 			Controller.Instance?.Input.Gameplay.Disable();
+			pulseCameras.EnableAll(false);
 
 			OnEnd?.Invoke();
 			Destroy(player);
@@ -214,7 +219,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 
 			//Create Beat(s)
 			CreateBeat(lCurrentKey.rotation, lCurrentKey.rotation2);
-
+			pulseCameras.PulseAll();
 		}
 
 		#region CreateBeat

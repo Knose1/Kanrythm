@@ -9,27 +9,30 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using Com.Github.Knose1.Common.InputController;
+using Com.Github.Knose1.InputUtils.InputController;
 using UnityEngine.UI;
 using UnityEditor;
+using Com.Github.Knose1.InputUtils.Utils;
+using Com.Github.Knose1.InputUtils.Settings;
 
-namespace Com.Github.Knose1.Common.Ui {
-	[AddComponentMenu("UI/Input/KeyInputButton")]
-	public class KeyInputButton : UIBehaviour
+namespace Com.Github.Knose1.InputUtils.Ui {
+	[AddComponentMenu(InputUtils_Path.MENU_ITEM_ROOT_NAME+nameof(BindingInputButton))]
+	public class BindingInputButton : UIBehaviour
 	{
-		[SerializeField] private Text text;
-		[SerializeField] private Text placeOlder;
-		[SerializeField] private RebindStartEvent startRebind;
+		[SerializeField] public Text text;
+		[SerializeField] public Text placeOlder;
 
+		[SerializeField] private RebindStartEvent startRebind = default;
 		public RebindStartEvent StartRebind { get => startRebind; }
 
-		[SerializeField] private RebindEndEvent endRebind;
+		[SerializeField] private RebindEndEvent endRebind = default;
 		public RebindEndEvent EndRebind { get => endRebind; }
 
 		[SerializeField, HideInInspector] protected int rebindedFunction;
-		private bool isRebinding;
+		public int RebindedFuction { get => rebindedFunction; set => rebindedFunction = value; }
 
-		internal int RebindedFuction { get => rebindedFunction; set => rebindedFunction = value; }
+		protected bool _isRebinding;
+		protected bool _isLeftButton;
 
 		protected override void Start()
 		{
@@ -39,29 +42,37 @@ namespace Com.Github.Knose1.Common.Ui {
 
 		private void Update()
 		{
-			if (!isRebinding && Input.GetMouseButtonUp(0) && RectTransformUtility.RectangleContainsScreenPoint(transform as RectTransform, Input.mousePosition, Camera.main))
+			if (!_isRebinding && Input.GetMouseButtonUp(0) && RectTransformUtility.RectangleContainsScreenPoint(transform as RectTransform, Input.mousePosition, Camera.main))
 			{
-				isRebinding = true;
+				_isRebinding = true;
 				startRebind.Invoke();
 				SetPlaceOlderAsActiveText();
 				Controller.OnRebindEnd += Controller_OnRebindEnd;
 				Controller.Instance.RebindingFunctions[rebindedFunction].function();
 			}
 
-			else if (Input.GetMouseButtonUp(0))
+			else if (_isLeftButton ? Input.GetMouseButtonUp(0) : !Controller.IsRebinding)
 			{
-				isRebinding = false;
+				_isRebinding = false;
+				_isLeftButton = false;
 			}
 		}
 
 		private void Controller_OnRebindEnd(InputControl obj)
 		{
+			if (!_isRebinding) return;
+
+			if (Input.GetMouseButton(0))
+			{
+				_isLeftButton = true;
+			}
+
 			SetTextAsActiveText();
 			SetKeyInputText(obj);
 			endRebind.Invoke(obj);
 		}
 
-		private void SetKeyInputText(InputControl control) => SetKeyInputText(control.name);
+		private void SetKeyInputText(InputControl control) => SetKeyInputText(InputSystemUtils.GetName(control));
 		private void SetKeyInputText(string text)
 		{
 			this.text.text = text;
@@ -80,7 +91,9 @@ namespace Com.Github.Knose1.Common.Ui {
 		}
 
 		#if UNITY_EDITOR
-		[Obsolete("This function can ONLY be used by Unity to generate a new KeyInputButton", false), MenuItem("GameObject/UI/KeyInputButton", false, 0)]
+		[Obsolete("This function can ONLY be used by Unity to generate a new KeyInputButton", false)]
+		[MenuItem("GameObject/Input/"+nameof(BindingInputButton), false, 11)]
+		[MenuItem(InputUtils_Path.MENU_ITEM_ROOT_NAME+"Create " +nameof(BindingInputButton)+" Object", false, 2)]
 		public static void CreateKeyInputButton(MenuCommand menu)
 		{
 			Controller.TryCreateController(menu);
@@ -94,6 +107,13 @@ namespace Com.Github.Knose1.Common.Ui {
 			text_text.raycastTarget = false;
 			text_text.horizontalOverflow = HorizontalWrapMode.Overflow;
 
+			RectTransform text_transform = text.transform as RectTransform;
+			text_transform.anchorMin = Vector2.zero;
+			text_transform.pivot = Vector2.up;
+			text_transform.anchorMax = Vector2.one;
+			text_transform.localPosition = new Vector2(12, -12);
+			text_transform.sizeDelta = new Vector2(100 - 12 * 2, 100 - 12 * 2);
+
 
 
 			//PlaceOlder
@@ -105,15 +125,21 @@ namespace Com.Github.Knose1.Common.Ui {
 			textColor.a = 0.5f;
 			placeOlder_text.color = textColor;
 
+			RectTransform placeOlder_transform = placeOlder.transform as RectTransform;
+			placeOlder_transform.anchorMin = Vector2.zero;
+			placeOlder_transform.pivot = Vector2.up;
+			placeOlder_transform.anchorMax = Vector2.one;
+			placeOlder_transform.localPosition = new Vector2(12, -12);
+			placeOlder_transform.sizeDelta = new Vector2(100 - 12 * 2, 100 - 12 * 2);
 
 
 
 			//Root GameObject
-			GameObject gameObject = new GameObject("KeyInputButton");
+			GameObject gameObject = new GameObject(nameof(BindingInputButton));
 			gameObject.layer = 5;
 			gameObject.AddComponent<RectTransform>();
 
-			KeyInputButton gameObject_keyInputButton = gameObject.AddComponent<KeyInputButton>();
+			BindingInputButton gameObject_keyInputButton = gameObject.AddComponent<BindingInputButton>();
 			gameObject_keyInputButton.text = text_text;
 			gameObject_keyInputButton.placeOlder = placeOlder_text;
 
@@ -124,9 +150,13 @@ namespace Com.Github.Knose1.Common.Ui {
 			gameObject_image.type = Image.Type.Sliced;
 			gameObject_image.fillCenter = true;
 
+			(gameObject.transform as RectTransform).pivot = Vector2.up;
 
-			text.transform.SetParent(gameObject.transform);
-			placeOlder.transform.SetParent(gameObject.transform);
+
+
+			text.transform.SetParent(gameObject.transform, true);
+			placeOlder.transform.SetParent(gameObject.transform, true);
+
 
 
 			GameObjectUtility.SetParentAndAlign(gameObject, menu.context as GameObject);

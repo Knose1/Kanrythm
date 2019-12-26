@@ -1,4 +1,4 @@
-using Com.Github.Knose1.Common.InputController;
+using Com.Github.Knose1.InputUtils.InputController;
 using Com.Github.Knose1.Kanrythm.Game.Hud;
 using Com.Github.Knose1.Kanrythm.Loader;
 using System;

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Com.Github.Knose1.Common.InputController;
+using Com.Github.Knose1.InputUtils.InputController;
 
 namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 	class HudManager : MonoBehaviour
