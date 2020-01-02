@@ -918,7 +918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraToPulse: {fileID: 1687112143}
-  deltaFOE: 1
+  deltaFOE: 0.5
   pulseCurve:
     serializedVersion: 2
     m_Curve:
@@ -946,7 +946,7 @@ MonoBehaviour:
   fromMinToMax: 0
   pingPong: 0
   pulseType: 1
-  pulseTime: 1
+  pulseTime: 0.5
 --- !u!20 &1687112143
 Camera:
   m_ObjectHideFlags: 0

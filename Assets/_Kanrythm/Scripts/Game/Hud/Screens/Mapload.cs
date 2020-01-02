@@ -14,7 +14,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 		public override void OnAddedToHudContainer(HudContainer hudContainer)
 		{
 			base.OnAddedToHudContainer(hudContainer);
-			MapLoader.StartLoad(MapLoader_OnFinish);
+			DataLoader.StartLoad(MapLoader_OnFinish);
 		}
 
 		private void MapLoader_OnFinish()

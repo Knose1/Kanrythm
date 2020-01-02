@@ -62,7 +62,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 
 		public void OnOpenMapFolder()
 		{
-			MapLoader.OpenMapFolder();
+			DataLoader.OpenMapFolder();
 		}
 
 		public void OnQuitButton()

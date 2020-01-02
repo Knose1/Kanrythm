@@ -45,9 +45,9 @@ namespace Com.Github.Knose1.Common.File
 			int lDotIndex = path.LastIndexOf(".");
 			if (lDotIndex == -1) return AudioType.UNKNOWN;
 
-			string audioExtension = path.Substring(lDotIndex + 1);
+			string lAudioExtension = path.Substring(lDotIndex + 1);
 
-			switch (audioExtension.ToLower())
+			switch (lAudioExtension.ToLower())
 			{
 				case "mp3":
 					return AudioType.MPEG;

@@ -31,7 +31,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud {
 			scrollingBehaviour = GetComponent<VerticalScrollableLayoutGroup>();
 		}
 		private void Start () {
-			int mapCount = MapLoader.Maplist.Count;
+			int mapCount = DataLoader.Maplist.Count;
 
 			for (int i = 0; i < mapCount; i++)
 			{

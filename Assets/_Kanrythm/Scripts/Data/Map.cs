@@ -100,5 +100,15 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 
 			return new AudioClipGetter(lUri.AbsoluteUri, audioType);
 		}
+
+		public IEnumerator LoadMedias()
+		{
+			return GetSong().GetAudioClip();
+		}
+
+		public void UnLoadMedias()
+		{
+
+		}
 	}
 }

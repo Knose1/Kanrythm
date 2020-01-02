@@ -37,7 +37,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.UI
 
 			onClick.AddListener(Button_OnClick);
 
-			map = MapLoader.Maplist[mapId];
+			map = DataLoader.Maplist[mapId];
 			ButtonText = map.name;
 
 			DifficultyContainer lDiffContainer = GetComponentInChildren<DifficultyContainer>();

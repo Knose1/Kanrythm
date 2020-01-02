@@ -20,7 +20,8 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 	{
 		#region GetInstance
 		private static GameManager instance;
-		public static GameManager Instance { get {
+		public static GameManager Instance {
+			get {
 				if (instance) return instance;
 
 				GameManager lNewGameManager = new GameObject("GameManager").AddComponent<GameManager>();
@@ -107,7 +108,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		public void StartMap(uint mapId = 0, uint difficultyId = 0, bool autoClear = false)
 		{
 			this.autoClear = autoClear;
-			LoadAndStartGame(MapLoader.Maplist[(int)mapId], difficultyId);
+			LoadAndStartGame(DataLoader.Maplist[(int)mapId], difficultyId);
 
 			gameContainer = new GameObject("GameContainer");
 			blackOverlay = Instantiate(GameRootAndObjectLibrary.Instance.BlackBackground);
