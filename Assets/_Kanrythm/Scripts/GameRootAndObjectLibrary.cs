@@ -10,16 +10,19 @@ namespace Com.Github.Knose1.Kanrythm
 
 		private static GameRootAndObjectLibrary instance;
 
-		[SerializeField] private Transform managerContainer;
+		[SerializeField] private Transform managerContainer = default;
 		public Transform ManagerContainer { get => managerContainer; }
 
-		[SerializeField] private Player playerPrefab;
+		[SerializeField] private Player playerPrefab = default;
 		public Player PlayerPrefab { get => playerPrefab; }
 
-		[SerializeField] private Beat beatPrefab;
+		[SerializeField] private Beat beatPrefab = default;
 		public Beat BeatPrefab { get => beatPrefab; }
 
-		[SerializeField] private SpriteRenderer blackBackground;
+		[SerializeField] private SpriteRenderer blackOverlay = default;
+		public SpriteRenderer BlackOverlay { get => blackOverlay; }
+
+		[SerializeField] private SpriteRenderer blackBackground = default;
 		public SpriteRenderer BlackBackground { get => blackBackground; }
 
 		/// <summary>

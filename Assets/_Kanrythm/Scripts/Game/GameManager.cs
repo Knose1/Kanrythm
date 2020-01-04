@@ -16,6 +16,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 	/// <summary>
 	///	%Game manager, it loads the map, the song and creates the beats
 	/// </summary>
+	[RequireComponent(typeof(RythmMusicPlayer))]
 	public class GameManager : StateMachine
 	{
 		#region GetInstance
@@ -25,6 +26,7 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 				if (instance) return instance;
 
 				GameManager lNewGameManager = new GameObject("GameManager").AddComponent<GameManager>();
+				lNewGameManager.transform.parent = GameRootAndObjectLibrary.Instance.ManagerContainer;
 
 				return instance = lNewGameManager;
 			}
@@ -46,12 +48,18 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		/// <summary>
 		/// If autoClear is enabled, the beats will automatiquely be destroyed when hiting the player's white outerborder (100% accuracy)
 		/// </summary>
-		public bool autoClear = false;
-		private List<PulseCamera> pulseCameras;
+		[SerializeField] public bool autoClear = false;
+		[SerializeField] private List<PulseCamera> pulseCameras = new List<PulseCamera>();
+
+		[SerializeField] private GameObject gameContainer = default;
+
+		private ScreenSpriteScaller background;
+		[SerializeField] private string backgroundSortingLayerName = "Game";
+		[SerializeField] private int backgroundLayerID;
 
 		private RythmMusicPlayer musicPlayer;
-		private GameObject gameContainer;
 		private SpriteRenderer blackOverlay;
+		private SpriteRenderer blackBackground;
 		private Player player;
 
 		private float fadeOutTime = 0;
@@ -63,38 +71,26 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		#endregion
 
 		#region map
-		private AudioClipGetter musicLoader;
-		private IEnumerator musicLoaderEnumerator;
+		private MapLoader mapLoader;
 
 		private Map map;
 		private Difficulty currentDiff;
-		private bool hasStartedDestroy = false;
 		#endregion map
 
 		private void Awake()
 		{
-			musicPlayer = gameObject.AddComponent<RythmMusicPlayer>();
+			musicPlayer = gameObject.GetComponent<RythmMusicPlayer>();
 			instance = this;
 		}
 
 		override protected void Start()
 		{
-			transform.parent = GameRootAndObjectLibrary.Instance.ManagerContainer;
-			pulseCameras = new List<PulseCamera>(FindObjectsOfType<PulseCamera>());
-			pulseCameras.EnableAll();
-
 			base.Start();
 		}
 
 		private void OnDestroy()
 		{
-			Controller.Instance?.Input.Gameplay.Disable();
-			pulseCameras.EnableAll(false);
-
-			OnEnd?.Invoke();
-			Destroy(player);
-			Destroy(gameContainer);
-			Destroy(blackOverlay);
+			StopMap();
 
 			instance = null;
 		}
@@ -110,43 +106,67 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			this.autoClear = autoClear;
 			LoadAndStartGame(DataLoader.Maplist[(int)mapId], difficultyId);
 
-			gameContainer = new GameObject("GameContainer");
-			blackOverlay = Instantiate(GameRootAndObjectLibrary.Instance.BlackBackground);
+			blackOverlay = Instantiate(GameRootAndObjectLibrary.Instance.BlackOverlay, gameContainer.transform);
 			blackOverlay.enabled = false;
+
+			blackBackground = Instantiate(GameRootAndObjectLibrary.Instance.BlackBackground, gameContainer.transform);
+			blackBackground.color = new Color(0,0,0, Config.BackgroundOpacity / (float)Config.MAX_BACKGROUND_VALUE);
 
 			player = Instantiate(GameRootAndObjectLibrary.Instance.PlayerPrefab, gameContainer.transform);
 
 			player.EnablePlay();
+			pulseCameras.EnableAll();
 			Controller.Instance.Input.Gameplay.Enable();
+		}
+
+		public void StopMap()
+		{
+			fadeOutTime = 0;
+			fadeTimestamp = 0;
+			doAction = DoActionVoid;
+
+			Controller.Instance?.Input.Gameplay.Disable();
+			musicPlayer.Stop();
+			pulseCameras.EnableAll(false);
+
+			OnEnd?.Invoke();
+			if (player)			Destroy(player.gameObject);
+			if (blackOverlay)	Destroy(blackOverlay);
+			if (blackBackground)	Destroy(blackBackground);
+			if (background)		Destroy(background.gameObject);
+			if (mapLoader != null) mapLoader.Dispose();
 		}
 
 		private void LoadAndStartGame(Map map, uint difficultyIndex)
 		{
 			this.map = map;
-			currentDiff = map.GetDifficulty(difficultyIndex);
-			musicLoader = map.GetSong();
 
-			musicLoaderEnumerator = musicLoader.GetAudioClip();
-
-			doAction = DoActionLoadMusic;
-
-			OnStart?.Invoke();
+			mapLoader = new MapLoader();
+			mapLoader.OnFinish += MapLoader_OnFinish;
+			mapLoader.StartLoad(map, (int)difficultyIndex);
 		}
 
-		#region doAction
-		private void DoActionLoadMusic()
+		private void MapLoader_OnFinish(MapLoader loader)
 		{
-			if (musicLoaderEnumerator.MoveNext()) return;
+			currentDiff = loader.Difficulty;
 
-			musicPlayer.SetMusic(map.timing, musicLoader.clip);
+			musicPlayer.SetMusic(map.timing, loader.AudioClipGetter.result);
+			if (loader.BackgroundGetter != null) background = ScreenSpriteScaller.GenerateFillTexture(loader.BackgroundGetter.result, gameContainer.transform);
+			background.Sprite.name = loader.BackgroundGetter.FileName;
+			background.SpriteRenderer.sortingLayerName = backgroundSortingLayerName;
+			background.gameObject.layer = backgroundLayerID;
+			background.canvasSize = Config.canvasSize;
 
-			musicLoaderEnumerator = null;
-			musicLoader = null;
+			loader.Dispose();
+			mapLoader = null;
+
+			OnStart?.Invoke();
 
 			//Permet d'attendre 1 frame avant le lancement de la musique
 			doAction = DoActionStartGame;
 		}
 
+		#region doAction
 		private void DoActionStartGame()
 		{
 
@@ -174,15 +194,22 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 		
 		private void DoActionFadeOut()
 		{
-			float timeRatio = (StretchableDeltaTime.Instance.ElapsedTime - fadeTimestamp) / fadeOutTime;
+			float timeRatio = GetTimeRatio(fadeTimestamp, fadeOutTime);
 			musicPlayer.Volume = Mathf.Lerp(1, 0, timeRatio);
 
 			Color lColor = blackOverlay.color;
 			lColor.a = Mathf.Lerp(0, 1, timeRatio);
 			blackOverlay.color = lColor;
 		}
+
+		private void DoActionCheckIsFadeEnded()
+		{
+			float timeRatio = GetTimeRatio(fadeTimestamp, fadeOutTime);
+
+			if (timeRatio > 1) StopMap();
+		}
 		#endregion doAction
-		
+
 		/// <summary>
 		/// Function in witch beats are instantied
 		/// </summary>
@@ -198,17 +225,14 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			//Has the map ended ?
 			if (lDiffTimeSplit >= currentDiff.TimeLine.Length)
 			{
-				if (hasStartedDestroy) return;
-
 				fadeOutTime = GLOBAL_MAP_OFFSET_BFORE_END_MAP - 1;
 				fadeTimestamp = StretchableDeltaTime.Instance.ElapsedTime;
 
 				blackOverlay.enabled = true;
 				doAction = DoActionFadeOut;
+				doAction += DoActionCheckIsFadeEnded;
 
-				Destroy(gameObject, GLOBAL_MAP_OFFSET_BFORE_END_MAP);
-
-				hasStartedDestroy = true;
+				musicPlayer.OnTimeSplit -= LevelLoop;
 
 				return;
 			}
@@ -244,5 +268,10 @@ namespace Com.Github.Knose1.Kanrythm.Game {
 			lBeat.autoClear = autoClear;
 		}
 		#endregion
+	
+		private float GetTimeRatio(float timestamp, float duration)
+		{
+			return (StretchableDeltaTime.Instance.ElapsedTime - timestamp) / duration;
+		}
 	}
 }

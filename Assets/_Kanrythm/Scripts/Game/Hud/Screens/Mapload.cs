@@ -14,12 +14,12 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 		public override void OnAddedToHudContainer(HudContainer hudContainer)
 		{
 			base.OnAddedToHudContainer(hudContainer);
-			DataLoader.StartLoad(MapLoader_OnFinish);
+			DataLoader.StartLoad(DataLoader_OnFinish);
 		}
 
-		private void MapLoader_OnFinish()
+		private void DataLoader_OnFinish()
 		{
-			Debug.Log("Map loader has finished");
+			Debug.Log(nameof(DataLoader)+ " has finished");
 			HudContainer.SetScreen(HudManager.Instance.GetTemplateMenu());
 		}
 		

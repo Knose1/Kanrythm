@@ -100,7 +100,7 @@ namespace Com.Github.Knose1.Common {
 		{
 			foreach (PulseCamera pulseCamera in pulseCameras)
 			{
-				pulseCamera.enabled = enabled;
+				if (pulseCamera) pulseCamera.enabled = enabled;
 			}
 		}
 	}

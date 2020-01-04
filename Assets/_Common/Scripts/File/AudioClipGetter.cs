@@ -5,39 +5,31 @@ using UnityEngine.Networking;
 
 namespace Com.Github.Knose1.Common.File
 {
-	public class AudioClipGetter
+	public class AudioClipGetter : Getter<AudioClip>
 	{
-		//public const string FILE_METHOD = "file:///";
-		public AudioClip clip;
-		public string path;
 		public AudioType audioType;
 
-		public AudioClipGetter(string path, AudioType audioType)
+		public AudioClipGetter(string path						) : this(path, GetAudioType(path)) {}
+		public AudioClipGetter(string path, AudioType audioType	) : base(path)
 		{
-			clip = null;
-			this.path = path;
+			result = null;
+			this.Path = path;
 			this.audioType = audioType;
 		}
 
-
-		public IEnumerator GetAudioClip()
+		protected override UnityWebRequest GetUnityWebRequest()
 		{
-			UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(path, audioType);
-			
-			yield return www.SendWebRequest();
+			return UnityWebRequestMultimedia.GetAudioClip(Path, audioType);
+		}
 
-			if (www.isNetworkError)
-			{
-				Debug.LogError(www.error);
-				yield break;
-			}
+		protected override AudioClip Download(UnityWebRequest www)
+		{
+			return DownloadHandlerAudioClip.GetContent(www);
+		}
 
-			while (!www.isDone)
-			{
-				yield return www;
-			}
-
-			clip = DownloadHandlerAudioClip.GetContent(www);
+		protected override void PostDownload(AudioClip result)
+		{
+			result.name = FileName;
 		}
 
 		public static AudioType GetAudioType(string path)

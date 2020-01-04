@@ -14,8 +14,8 @@ TagManager:
   - UI
   - 
   - 
+  - GamePulse
   - Game
-  - 
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 307143629
     locked: 0
   - name: Background Particle
     uniqueID: 26279877

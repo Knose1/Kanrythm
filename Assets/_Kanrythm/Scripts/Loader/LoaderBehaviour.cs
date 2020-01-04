@@ -32,6 +32,12 @@ namespace Com.Github.Knose1.Kanrythm.Loader {
 			Destroy(gameObject);
 		}
 
+		private void OnDestroy()
+		{
+			doAction = DoActionVoid;
+			OnFinish = null;
+		}
+
 
 	}
 }

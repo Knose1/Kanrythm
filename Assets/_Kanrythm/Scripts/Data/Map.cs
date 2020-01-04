@@ -75,7 +75,7 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 		}
 		public Difficulty GetDifficulty(int id)
 		{
-			return Difficulty.GetDifficulty(directoryPath + "/" + difficulties[id] + MAP_EXTENTION);
+			return Difficulty.GetDifficulty(directoryPath + "/" + difficulties[id] + MAP_EXTENTION, this);
 		}
 
 		public List<Difficulty> GetDifficulties()
@@ -99,16 +99,6 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 			Debug.Log("Loading songfile : " + lUri.AbsoluteUri);
 
 			return new AudioClipGetter(lUri.AbsoluteUri, audioType);
-		}
-
-		public IEnumerator LoadMedias()
-		{
-			return GetSong().GetAudioClip();
-		}
-
-		public void UnLoadMedias()
-		{
-
 		}
 	}
 }

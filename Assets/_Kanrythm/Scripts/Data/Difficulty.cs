@@ -11,27 +11,34 @@ namespace Com.Github.Knose1.Kanrythm.Data
 
 		private const string MAIN_ROTATION = "mainrotation";
 		private const string ROTATION_CANON2 = "rotationcanon2";
-
+		private const string INDEX = "index";
+		private const string APPROACH_RATE = "approachrate";
+		private const string TIME_SPLITTING = "timesplitting";
+		private const string BACKGROUND = "background";
 		private static readonly string[] lineSplitter = new string[] { "\r\n", "\n" };
-
 
 
 
 		private float timeSplitting;
 		private float approachRate;
 		private TimeLine timeLine;
+		private Map map;
+		private string background;
 
-		public float TimeSplitting { get => timeSplitting; }
-		public float ApproachRate { get => approachRate; }
-		public TimeLine TimeLine { get => timeLine; }
+		public float TimeSplitting => timeSplitting;
+		public float ApproachRate => approachRate;
+		public TimeLine TimeLine => timeLine;
+		public Map Map => map;
+		public bool HasBackground => background.Length > 0;
 
 		public TimeLine GetTimeLine()
 		{
 			return timeLine;
 		}
 
-		private Difficulty(string rawCode)
+		private Difficulty(string rawCode, Map map)
 		{
+			this.map = map;
 
 			string[] lLines = rawCode.Split(lineSplitter, StringSplitOptions.RemoveEmptyEntries);
 
@@ -47,15 +54,19 @@ namespace Com.Github.Knose1.Kanrythm.Data
 
 				// WARNING : DO NOT REPEAT URSELF
 				if (lCurrentLine.StartsWith(COMMENT_CHAR)) continue;
-				else if (lCurrentLine.StartsWith("timesplitting"))
+				else if (lCurrentLine.StartsWith(TIME_SPLITTING))
 				{
 					timeSplitting = 1f / uint.Parse(lCurrentLine.Split('=')[1]);
 				}
-				else if (lCurrentLine.StartsWith("approachrate"))
+				else if (lCurrentLine.StartsWith(APPROACH_RATE))
 				{
 					approachRate = float.Parse(lCurrentLine.Split('=')[1]);
 				}
-				else if (lCurrentLine.StartsWith("index"))
+				else if (lCurrentLine.StartsWith(BACKGROUND))
+				{
+					background = lCurrentLine.Split('=')[1].Trim();
+				}
+				else if (lCurrentLine.StartsWith(INDEX))
 				{
 					lTimelineIndex = lCurrentLine.Replace(" ", "").Replace("index=", "").Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
 				}
@@ -84,12 +95,26 @@ namespace Com.Github.Knose1.Kanrythm.Data
 			}
 		}
 
+		public Texture2DGetter GetBackground()
+		{
+			if (!HasBackground)
+			{
+				Debug.LogWarning("Warning, the Difficulty has no Background");
+				return null;
+			}
 
-		public static Difficulty GetDifficulty(string path)
+			Uri lUri = new Uri(map.directoryPath.Replace("\\", "/") + "/" + background);
+
+			Debug.Log("Loading Background : " + lUri.AbsoluteUri);
+
+			return new Texture2DGetter(lUri.AbsoluteUri);
+		}
+
+		public static Difficulty GetDifficulty(string path, Map map)
 		{
 			string lRaw = HandleTextFile.ReadString(path);
 
-			return new Difficulty(lRaw);
+			return new Difficulty(lRaw, map);
 		}
 	}
 }

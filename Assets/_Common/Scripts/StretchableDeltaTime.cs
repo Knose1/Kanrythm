@@ -62,6 +62,7 @@ namespace Com.Github.Knose1.Common
 			startTime = -1;
 			scaleTime = 1;
 			elapsedTime = 0;
+			scaledDeltaTime = 0;
 		}
 
 		protected override void DoActionNormal()

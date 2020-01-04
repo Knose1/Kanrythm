@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Com.Github.Knose1.Kanrythm.Game
 {
-
+	[RequireComponent(typeof(StretchableDeltaTime))]
 	public class RythmMusicPlayer : MonoBehaviour
 	{
 
@@ -39,7 +39,7 @@ namespace Com.Github.Knose1.Kanrythm.Game
 		private void Awake()
 		{	
 			audioSource = gameObject.AddComponent<AudioSource>();
-			stretchableDeltaTime = gameObject.AddComponent<StretchableDeltaTime>();
+			stretchableDeltaTime = gameObject.GetComponent<StretchableDeltaTime>();
 		}
 
 		private void OnDestroy()
@@ -57,24 +57,29 @@ namespace Com.Github.Knose1.Kanrythm.Game
 
 		public void Play()
 		{
-			/*if (musicOffset == 0)
-				audioSource.Play();*/
 			audioSource.loop = false;
 			audioSource.pitch = playingSpeed;
 			stretchableDeltaTime.ScaleTime = playingSpeed;
 
 			stretchableDeltaTime.StartDeltaTime();
 
-			//musicTimestamp = Time.time;
-			//startTimestamp = Time.time;
-
 			Update();
 		}
 
 		public void Stop()
 		{
+			OnTimeSplit = null;
+
 			audioSource.Stop();
 			stretchableDeltaTime.StopDeltaTime();
+
+			timeByMinSplitting = 0;
+			currentTimeSplitIndex = 0;
+
+			musicOffset = 0;
+			timeSplitOffset = 0;
+
+			Volume = 1;
 		}
 
 		private void Update()
@@ -93,7 +98,7 @@ namespace Com.Github.Knose1.Kanrythm.Game
 
 			for (float i = lCurrentTimestamp; i > lMusicTimestamp; i -= timeByMinSplitting)
 			{
-				OnTimeSplit(currentTimeSplitIndex++);
+				OnTimeSplit?.Invoke(currentTimeSplitIndex++);
 			}
 		}
 		private void tryStartMusic()

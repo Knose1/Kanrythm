@@ -1,4 +1,6 @@
+using Com.Github.Knose1.Common.Ui.Handler;
 using Com.Github.Knose1.InputUtils.InputController;
+using Com.Github.Knose1.Kanrythm.Data;
 using Com.Github.Knose1.Kanrythm.Game;
 using Com.Github.Knose1.Kanrythm.Game.Hud;
 using Com.Github.Knose1.Kanrythm.Game.Hud.Screens;
@@ -16,6 +18,9 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 	public class Menu : Screen
 	{
 		[SerializeField] private MapUiTempManager mapUiTempManager;
+
+		[Header("Slider and Buttons")]
+		[SerializeField] private SliderHandler backgroundOpacitySlider;
 
 		[Header("Animation Trigger")]
 		[SerializeField] private string playTrigger = "Play";
@@ -35,6 +40,14 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 			mapUiTempManager.OnSelectedMapAndDifficulty += MapButtonContainer_OnSelectedMapAndDifficulty;
 
 			Controller.Instance.Input.Hud.Exit.performed += Exit_performed;
+			backgroundOpacitySlider.Value = Config.BackgroundOpacity;
+			backgroundOpacitySlider.OnValueChanged += BackgroundOpacitySlider_OnValueChanged;
+		}
+
+		private void BackgroundOpacitySlider_OnValueChanged(float arg1, UnityEngine.UI.Slider arg2)
+		{
+			if (arg1 < 0) arg1 = 0;
+			Config.BackgroundOpacity = (uint)arg1;
 		}
 
 		public override void OnRemovedFromHudContainer(HudContainer hudContainer)
@@ -43,6 +56,7 @@ namespace Com.Github.Knose1.Kanrythm.Game.Hud.Screens
 			mapUiTempManager.OnSelectedMapAndDifficulty -= MapButtonContainer_OnSelectedMapAndDifficulty;
 
 			Controller.Instance.Input.Hud.Exit.performed -= Exit_performed;
+			backgroundOpacitySlider.OnValueChanged -= BackgroundOpacitySlider_OnValueChanged;
 		}
 		#endregion
 

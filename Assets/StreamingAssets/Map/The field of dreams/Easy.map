@@ -1,4 +1,15 @@
-﻿;timeSplitting : the number (uint) of split by beat
+﻿;;;;;;;;;;;;;;;;;;;;;;;
+;       General       ;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+;Relative path to the background
+background = Background/background.jpg
+
+;;;;;;;;;;;;;;;;;;;;;;
+; Timing and mapping ;
+;;;;;;;;;;;;;;;;;;;;;;
+
+;timeSplitting : the number (uint) of split by beat
 ;
 ; example : timeSplitting=4
 ; it means that 1 beat will be split into 4 timingSection
