@@ -171,7 +171,7 @@ namespace Com.Github.Knose1.InputUtils.InputController {
 
 			// remove whitespace and minus
 
-			string copyPath = path+"/"+nameof(Controller)+".cs";
+			string copyPath = Path.Combine(path,nameof(Controller)+".cs");
 
 			if (!File.Exists(copyPath))
 			{

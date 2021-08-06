@@ -1,8 +1,8 @@
 using System;
-using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEditor;
+using System.IO;
 
 namespace Com.Github.Knose1.InputUtils.Settings {
 	public enum FieldContent
@@ -25,16 +25,28 @@ namespace Com.Github.Knose1.InputUtils.Settings {
 			{
 				if (_instance == null)
 				{
-					_instance = AssetDatabase.LoadAssetAtPath<InputUtils_SettingsAsset>(InputUtils_Path.GetAssetPath());
+					_instance = Resources.Load<InputUtils_SettingsAsset>(InputUtils_Path.GetAssetRessourcePath());
+					
 					if (_instance == null)
 					{
+						#if UNITY_EDITOR
 						_instance = CreateInstance<InputUtils_SettingsAsset>();
 						_instance.name = InputUtils_Path.ASSET_NAME;
 
-						string path = InputUtils_Path.GetAssetPath();
+						if (!AssetDatabase.IsValidFolder(Path.Combine(InputUtils_Path.ASSETS_FOLDER, InputUtils_Path.RESOURCES_FOLDER)))
+						{
+							AssetDatabase.CreateFolder(InputUtils_Path.ASSETS_FOLDER, InputUtils_Path.RESOURCES_FOLDER);
+						}
+						if (!AssetDatabase.IsValidFolder(Path.Combine(InputUtils_Path.ASSETS_FOLDER, InputUtils_Path.RESOURCES_FOLDER, InputUtils_Path.START_FOLDER)))
+						{
+							AssetDatabase.CreateFolder(Path.Combine(InputUtils_Path.ASSETS_FOLDER, InputUtils_Path.RESOURCES_FOLDER), InputUtils_Path.START_FOLDER);
+						}
 
-						AssetDatabase.CreateAsset(_instance, path);
+						AssetDatabase.CreateAsset(_instance, InputUtils_Path.GetAssetPath());
 						AssetDatabase.SaveAssets();
+						#else
+						throw new Exception("["+nameof(InputUtils_SettingsAsset)+"] _instance is null");
+						#endif
 					}
 				}
 

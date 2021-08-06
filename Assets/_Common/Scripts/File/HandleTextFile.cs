@@ -12,13 +12,16 @@ namespace Com.Github.Knose1.Common.File {
 
 		static public string ReadString(string path)
 		{
+			string lToReturn;
+
 			//Read the text from directly from the test.txt file
-			StreamReader reader = new StreamReader(path);
+			using (StreamReader reader = new StreamReader(path)) 
+			{
 
-			string lToReturn = reader.ReadToEnd();
+				lToReturn = reader.ReadToEnd();
 
-			reader.Close();
-
+				reader.Close();
+			}
 			return lToReturn;
 		}
 

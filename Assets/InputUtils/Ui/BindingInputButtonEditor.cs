@@ -3,6 +3,7 @@
 /// Date : 23/12/2019 00:45
 ///-----------------------------------------------------------------
 
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -47,3 +48,4 @@ namespace Com.Github.Knose1.InputUtils.Ui {
 
 	}
 }
+#endif

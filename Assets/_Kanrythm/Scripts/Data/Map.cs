@@ -2,6 +2,7 @@ using Com.Github.Knose1.Common.File;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -52,7 +53,7 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 			Map lMap = new Map();
 			try
 			{
-				string lJsonString = HandleTextFile.ReadString(directoryPath + "/" + MAIN_JSON);
+				string lJsonString = HandleTextFile.ReadString(Path.Combine(directoryPath, MAIN_JSON));
 
 				lMap = JsonUtility.FromJson<Map>(lJsonString);
 
@@ -75,7 +76,7 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 		}
 		public Difficulty GetDifficulty(int id)
 		{
-			return Difficulty.GetDifficulty(directoryPath + "/" + difficulties[id] + MAP_EXTENTION, this);
+			return Difficulty.GetDifficulty(Path.Combine(directoryPath, difficulties[id] + MAP_EXTENTION), this);
 		}
 
 		public List<Difficulty> GetDifficulties()
@@ -94,7 +95,7 @@ namespace Com.Github.Knose1.Kanrythm.Data {
 
 		public AudioClipGetter GetSong()
 		{
-			Uri lUri = new Uri(directoryPath.Replace("\\", "/") + "/" + audio);
+			Uri lUri = new Uri(Path.Combine(directoryPath.Replace("\\", "/"), audio));
 
 			Debug.Log("Loading songfile : " + lUri.AbsoluteUri);
 

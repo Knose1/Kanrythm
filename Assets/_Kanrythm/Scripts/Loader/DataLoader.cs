@@ -23,7 +23,7 @@ namespace Com.Github.Knose1.Kanrythm.Loader {
 		static DataLoader()
 		{
 			streamingAssetsFolder = new DirectoryInfo(Application.streamingAssetsPath);
-			mapFolder = new DirectoryInfo(Application.streamingAssetsPath + "/" + MAP_FOLDER);
+			mapFolder = new DirectoryInfo(Path.Combine(Application.streamingAssetsPath, MAP_FOLDER));
 			Debug.Log("DataLoader is ready");
 		}
 

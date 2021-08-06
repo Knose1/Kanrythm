@@ -1,6 +1,7 @@
 using Com.Github.Knose1.Common.File;
 using Com.Github.Knose1.Kanrythm.Data.Timing;
 using System;
+using System.IO;
 using UnityEngine;
 
 namespace Com.Github.Knose1.Kanrythm.Data
@@ -103,7 +104,7 @@ namespace Com.Github.Knose1.Kanrythm.Data
 				return null;
 			}
 
-			Uri lUri = new Uri(map.directoryPath.Replace("\\", "/") + "/" + background);
+			Uri lUri = new Uri(Path.Combine(map.directoryPath.Replace("\\", "/"), background));
 
 			Debug.Log("Loading Background : " + lUri.AbsoluteUri);
 
